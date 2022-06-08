@@ -70,7 +70,7 @@ echo https://www.hackthebox.eu/ | xxd -p
 
 To decode it we just add a -r at the end. The command looks like this now
 ```
-echo 68747470733a2f2f7777772e6861636b746865626f782e65752f0a | base64 -d -r
+echo 68747470733a2f2f7777772e6861636b746865626f782e65752f0a | xxd -p -r
 ``` 
 
 ## Caesar/Rot13
