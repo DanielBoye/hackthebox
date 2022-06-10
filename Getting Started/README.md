@@ -19,6 +19,19 @@ https://github.com/ffuf/ffuf
 
 https://github.com/OJ/gobuster
 
+## HTTP status codes
+
+https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+
+## DNS Subdomain Enumeration
+
+Contains many useful lists for fuzzing and exploitation: https://github.com/danielmiessler/SecLists
+
+Take screenshots of target web applications, fingerprint them, and indentify possible default credentials: https://github.com/FortyNorthSecurity/EyeWitness
+
+## Whatweb
+
+
 
 
 
