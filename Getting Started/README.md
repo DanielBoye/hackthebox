@@ -153,6 +153,25 @@ Also a checklist: https://github.com/swisskyrepo/PayloadsAllTheThings
  
  Contains a list of Windows applications which we may be able to leverage to perform certain functions, like downloading files or executing commands in the context of a privileged user: https://lolbas-project.github.io/#
  
+ ### Schedueled tasks
  
+There are usually two ways to take advantage of scheduled tasks (Windows) or cron jobs (Linux) to escalate our privileges:
+
+ 1. Add new scheduled tasks/cron jobs
+ 2. Trick them to execute a malicious software
+
+The easiest way is to check if we are allowed to add new scheduled tasks. In Linux, a common form of maintaining scheduled tasks is through Cron Jobs. There are specific directories that we may be able to utilize to add new cron jobs if we have the write permissions over them. These include:
+
+/etc/crontab
+/etc/cron.d
+/var/spool/cron/crontabs/root
+
+If we can write to a directory called by a cron job, we can write a bash script with a reverse shell command, which should send us a reverse shell when executed.
+
+### Q
+
+sudo -u user2 /bin/bash 
+
+This is to gain access to the flag.
 
 
