@@ -117,3 +117,25 @@ Nmap dash list
 
 To learn more about nmap: https://academy.hackthebox.com/module/details/19
 
+---
+
+## Privilege Ecalation
+
+### PrivEsc Checklists
+
+Checklists for Linux and Windows, but contains more info: https://book.hacktricks.xyz/welcome/readme
+
+Also a checklist: https://github.com/swisskyrepo/PayloadsAllTheThings
+
+ ### Enumeration Scripts
+ 
+ Linux enumeration scripts: https://github.com/rebootuser/LinEnum
+ 
+ Linux Privilege Escalation Check Script: https://github.com/sleventyeleven/linuxprivchecker
+ 
+ For windows: https://github.com/GhostPack/Seatbelt
+ 
+ https://github.com/411Hall/JAWS
+ 
+
+
