@@ -137,5 +137,22 @@ Also a checklist: https://github.com/swisskyrepo/PayloadsAllTheThings
  
  https://github.com/411Hall/JAWS
  
+ ### Kernel Exploits
+ 
+ If you find any service running and old operation system, we should start by looking for potential kernel vulnerabilities that may exist. To search up older versions for vulnerabilities we use ```searchsploit```
+ 
+ ### Vulnerable Software
+ 
+ We need to check what runs on the system. In linux we do this with running ```dpkg -l``` and on Windows we look at C:\Program Files to check what software that is installed on the system. Then just look for older versions that are in use, and search for vulnerabilities. 
+ 
+ ### User Privileges
+ 
+ ```sudo -l``` to see what sudo privileges we have.
+ 
+ List of commands on how they can explited through sudo: https://gtfobins.github.io/
+ 
+ Contains a list of Windows applications which we may be able to leverage to perform certain functions, like downloading files or executing commands in the context of a privileged user: https://lolbas-project.github.io/#
+ 
+ 
 
 
