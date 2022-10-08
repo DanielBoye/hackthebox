@@ -16,5 +16,9 @@ For å løse denne gjør jeg en rask nmap scan på domenet. Jeg finner prosessen
 <br>
 <br>
 
-# KOMMER MER INFORMASJON
+![hacking](https://user-images.githubusercontent.com/83395536/194724526-3ab048e5-345d-493a-9a4b-5a5f0b61d166.png)
+<br>
+![hack3](https://user-images.githubusercontent.com/83395536/194724534-4c0c569a-65c7-430c-b289-9a2c12f39181.png)
+<br>
+![hack2](https://user-images.githubusercontent.com/83395536/194724535-dc59360b-0745-4899-9e90-252eeff910e7.png)
 
