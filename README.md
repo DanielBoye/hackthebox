@@ -1,5 +1,1 @@
-This will be the place I will post all of my notes that I will take over at HackTheBox Academy 
-
-Note that it ain't perfect, and could be writing errors and mistakes. The notes are only so I remember the things, and websites noted. 
-
----
+Her kommer jeg til å legge ved alle notater/gjenomganger og utførelser av moduler på academy.hackthebox.com. Ingenting her er perfekt, og noe er skrevet på Engelsk, og noe er på Norsk :)
