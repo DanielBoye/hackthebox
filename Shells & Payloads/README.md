@@ -1,5 +1,28 @@
 # Shells & Payloads
 
+## Contents
+- [Shell Basics](#shell-basics)
+    - [Bind Shells](#bind-shells)
+        - [What is it?](#what-is-it)
+        - [Creating a TCP session with Netcat](#creating-a-tcp-session-with-netcat)
+        - [Establishing a Basic Bind Shell with Netcat](#establishing-a-basic-bind-shell-with-netcat)
+        - [Q](#q-ssh-to-the-target-create-a-bind-shell-then-use-netcat-to-connect-to-the-target-using-the-bind-shell-you-set-up-when-you-have-completed-the-exercise-submit-the-contents-of-the-flagtxt-file-located-at-customscripts)
+    - [Reverse Shells](#reverse-shells)
+
+- [API Documentation](#api-documentation)
+- [Setup and Run](#setup-and-run)
+- [Commands](#commands)
+    - [Wallet](#wallet)
+    - [Price](#price)
+    - [Other](#other)
+- [TODO](#todo)
+- [Contribute](#contribute)
+  - [Pull request](#pull-request)
+- [Contributors](#contributors)
+- [License](#license)
+
+# Shell Basics
+
 ## Bind Shells
 
 ### What is it?
@@ -104,7 +127,7 @@ To find the flag for the task. Go to the root directory and move into the folder
 
 ## Reverse Shell
 
-### WHat is it?
+### What is it?
 
 Reverse shells are the victim connecting to our machine.
 
