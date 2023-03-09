@@ -123,7 +123,11 @@ Reverse shells are the victim connecting to our machine.
 
 With a reverse shell, the attack box will have a listener running, and the target will need to initiate the connection.
 
-To demonstrate this, we can attack a windows machine
+<br>
+
+<img src="https://academy.hackthebox.com/storage/modules/115/reverseshell.png" width="50%" height="50%">
+
+---
 
 ### Hands-on With A Simple Reverse Shell in Windows
 
@@ -187,6 +191,5 @@ Task solved ![image](https://user-images.githubusercontent.com/83395536/22356150
 
 
 
-<img src="https://academy.hackthebox.com/storage/modules/115/reverseshell.png" width="50%" height="50%">
 
 
