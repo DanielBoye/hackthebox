@@ -11,6 +11,9 @@
         - [What is it?](#what-is-it)
         - [Hands-on With A Simple Reverse Shell in Windows](#hands-on-with-a-simple-reverse-shell-in-windows)
         - [Q](#connect-to-the-target-via-rdp-and-establish-a-reverse-shell-session-with-your-attack-box-then-submit-the-hostname-of-the-target-box)
+- [Payloads](#payloads)    
+    - [Introduction to Payloads](#introduction-to-payloads)
+    
 
 # Shell Basics
 
@@ -200,16 +203,19 @@ Run the payload as learned previously
 
 We have now connected to our victim.
 
-To submit the hostname of the target box we run
+To submit the hostname of the target box we need to know the hostname. To find this from the command prompt in Windows we run the command
 ```console
 whoami
 ```
 
-It should look something like this:
+You should have something looking like this:
 
 ![image](https://user-images.githubusercontent.com/83395536/223561506-886d7c2c-f05b-4587-864c-559f220cd38b.png)
 
+Now submit the hostname and voila!
 
+# Payloads
 
+## Introduction to Payloads
 
 
