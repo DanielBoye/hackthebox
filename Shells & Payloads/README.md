@@ -10,6 +10,7 @@
     - [Reverse Shells](#reverse-shells)
         - [What is it?](#what-is-it)
         - [Hands-on With A Simple Reverse Shell in Windows](#hands-on-with-a-simple-reverse-shell-in-windows)
+        - [Q](#connect-to-the-target-via-rdp-and-establish-a-reverse-shell-session-with-your-attack-box-then-submit-the-hostname-of-the-target-box)
 
 # Shell Basics
 
@@ -183,11 +184,30 @@ ws01\htb-student
 
 Here we have received the connection and I am running whoami to check the hostname and username.  
 
+### Connect to the target via RDP and establish a reverse shell session with your attack box then submit the hostname of the target box.
 
+First we connect to our Windows machine with the RDP protocol.
+
+Set up netcat to listen on port 443.
+
+Run the powershell command for disabling Microsoft Anti Virus
+
+Run the payload as learned previously
 
 ![image](https://user-images.githubusercontent.com/83395536/223561378-f945d08b-8e4a-4bf8-bb92-39f652519890.png)
 
-Task solved ![image](https://user-images.githubusercontent.com/83395536/223561506-886d7c2c-f05b-4587-864c-559f220cd38b.png)
+---
+
+We have now connected to our victim.
+
+To submit the hostname of the target box we run
+```console
+whoami
+```
+
+It should look something like this:
+
+![image](https://user-images.githubusercontent.com/83395536/223561506-886d7c2c-f05b-4587-864c-559f220cd38b.png)
 
 
 
