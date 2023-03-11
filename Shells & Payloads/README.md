@@ -33,6 +33,14 @@
         - [Sets Sendbyte](#sets-sendbyte)
         - [Terminate TCP Connection](#terminate-tcp-connection)
     - [Payloads Take Different Shapes and Forms](#payloads-take-different-shapes-and-forms) 
+  - [Automating Payloads & Delivery with Metasploit](#automating-payloads--delivery-with-metasploit) 
+    - [Using Metasploit](#using-metasploit)
+      - [Start Metasploit](#start-metasploit)
+      - [Search in Metasploit](#search-in-metasploit)
+      - [Select the options](#select-the-option)
+      - [Checking the options](#checking-the-options)
+      - [Set the options](#set-the-options)
+    - [Q](#q-exploit-the-target-using-what-youve-learned-in-this-section-then-submit-the-name-of-the-file-located-in-htb-students-documents-folder-format-filenameextension)   
 
 
 
