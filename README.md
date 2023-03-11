@@ -2,4 +2,8 @@
 
 Here is all of my notes for the HackTheBox Academy!
 
-Every folder contains a README.md file for the assigned module
+Check out [this](Shells%20&%20Payloads) one!
+
+## Working on now
+
+Currently working on [Shells & Payloads](Shells%20&%20Payloads)
