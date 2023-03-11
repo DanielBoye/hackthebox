@@ -535,6 +535,8 @@ Create a **interactive shell** in metepreter with `shell`
 
 ### Q: Exploit the target using what you've learned in this section, then submit the name of the file located in htb-student's Documents folder. (Format: filename.extension)
 
+Scan target 
+
 ```shell-session
 nmap -sC -sV -Pn 10.129.201.160
 ```
