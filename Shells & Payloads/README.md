@@ -14,6 +14,27 @@
     - [Q](#connect-to-the-target-via-rdp-and-establish-a-reverse-shell-session-with-your-attack-box-then-submit-the-hostname-of-the-target-box)
 - [Payloads](#payloads)
   - [Introduction to Payloads](#introduction-to-payloads)
+    - [One-liners Examined](#one-liners-examined) 
+      - [Netcat/Bash Reverse Shell One-liner](#netcatbash-reverse-shell-one-liner) 
+        - [Remove /tmp/f](#remove-tmpf)
+        - [Make A Named Pipe](#make-a-named-pipe)
+        - [Output Redirection](#output-redirection)
+        - [Set Shell Options](#set-shell-options)
+        - [Open a Connection with Netcat](#open-a-connection-with-netcat)
+      - [PowerShell One-liner Explained](#powershell-one-liner-explained) 
+        - [Calling Powershell](#calling-powershell)
+        - [Binding a socket](binding-a-socket)
+        - [Setting The Command Stream](#setting-the-command-stream)
+        - [Empty Byte Stream](#empty-byte-stream)
+        - [Stream Parameters](#stream-parameters)
+        - [Set The Byte Encoding](#set-the-byte-encoding)
+        - [Invoke-Expression](#invoke-expression)
+        - [Show Working Directory](#show-working-directory)
+        - [Sets Sendbyte](#sets-sendbyte)
+        - [Terminate TCP Connection](#terminate-tcp-connection)
+    - [Payloads Take Different Shapes and Forms](#payloads-take-different-shapes-and-forms) 
+
+
 
 # Shell Basics
 
@@ -369,7 +390,7 @@ This is the [TcpClient.Close](https://docs.microsoft.com/en-us/dotnet/api/syste
 
 The one-liner we just examined together can also be executed in the form of a PowerShell script (`.ps1`). We can see an example of this by viewing the source code below. This source code is part of the [nishang](https://github.com/samratashok/nishang/blob/master/Shells/Invoke-PowerShellTcp.ps1) project:
 
-#### Payloads Take Different Shapes and Forms
+### Payloads Take Different Shapes and Forms
 
 We need to understand the differences in payloads to understand why Windows Anti Virus is blocking the script or command from execution.
 
