@@ -40,7 +40,10 @@
       - [Select the options](#select-the-option)
       - [Checking the options](#checking-the-options)
       - [Set the options](#set-the-options)
-    - [Q](#q-exploit-the-target-using-what-youve-learned-in-this-section-then-submit-the-name-of-the-file-located-in-htb-students-documents-folder-format-filenameextension)   
+    - [Q](#q-exploit-the-target-using-what-youve-learned-in-this-section-then-submit-the-name-of-the-file-located-in-htb-students-documents-folder-format-filenameextension) 
+  - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom) 
+    - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom-1)
+    - [Staged vs. Stageless Payloads](#staged-vs-stageless-payloads)
 
 
 
