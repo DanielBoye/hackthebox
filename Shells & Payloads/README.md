@@ -46,7 +46,13 @@
     - [Staged vs. Stageless Payloads](#staged-vs-stageless-payloads)
     - [Building A Stageless Payload](#building-a-stageless-payload)
     - [Building a simple Stageless Payload for a Windows system](#building-a-simple-stageless-payload-for-a-windows-system)
-    
+- [Windows Shells](#windows-shells)
+  - [Infiltrating Windows](#infiltrating-windows)
+    - [Prominent Windows Exploits](#prominent-windows-exploits)
+    - [Enumerating Windows & Fingerprinting Methods](#enumerating-windows--fingerprinting-methods)
+      - [Pinging a machine](#pinging-a-machine)
+      - [OS Detection Scan](#os-detection-scan)
+      
 
 
 
