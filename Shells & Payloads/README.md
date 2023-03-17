@@ -44,6 +44,9 @@
   - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom) 
     - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom-1)
     - [Staged vs. Stageless Payloads](#staged-vs-stageless-payloads)
+    - [Building A Stageless Payload](#building-a-stageless-payload)
+    - [Building a simple Stageless Payload for a Windows system](#building-a-simple-stageless-payload-for-a-windows-system)
+    
 
 
 
