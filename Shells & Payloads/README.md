@@ -56,7 +56,7 @@
     - [Payload files for Windows](#payload-files-for-windows)
     - [Tools, Tactics, and Procedures for Payload Generation, Transfer, and Execution](#tools-tactics-and-procedures-for-payload-generation-transfer-and-execution)
       - [Payload Transfer and Execution](#payload-transfer-and-execution)
-    - [Q: Gain a shell on the vulnerable target, then submit the contents of the flag.txt file that can be found in C:\](#q-gain-a-shell-on-the-vulnerable-target-then-submit-the-contents-of-the-flagtxt-file-that-can-be-found-in-c)
+    - [Q: Gain a shell on the vulnerable target, then submit the contents](#q-gain-a-shell-on-the-vulnerable-target-then-submit-the-contents-of-the-flagtxt-file-that-can-be-found-in-c)
 - [NIX Shells](#nix-shells)
     - [Infiltrating Unix/Linux](#infiltrating-unixlinux) 
     - [Spawning Interactive Shells](#spawning-interactive-shells)
@@ -70,9 +70,6 @@
 - [Additional Considerations](#additional-considerations)
     - [Detection & Prevention](#detection--prevention)
 
-Web Shells
-Skills Assessment
-Additional Considerations
 
 # Shell Basics
 
