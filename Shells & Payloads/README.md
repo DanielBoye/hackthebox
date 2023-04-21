@@ -52,6 +52,27 @@
     - [Enumerating Windows & Fingerprinting Methods](#enumerating-windows--fingerprinting-methods)
       - [Pinging a machine](#pinging-a-machine)
       - [OS Detection Scan](#os-detection-scan)
+      - [Using banner.nse to enumerate ports](#using-bannernse-to-enumerate-ports)
+    - [Payload files for Windows](#payload-files-for-windows)
+    - [Tools, Tactics, and Procedures for Payload Generation, Transfer, and Execution](#tools-tactics-and-procedures-for-payload-generation-transfer-and-execution)
+      - [Payload Transfer and Execution](#payload-transfer-and-execution)
+    - [Q: Gain a shell on the vulnerable target, then submit the contents of the flag.txt file that can be found in C:\](#q-gain-a-shell-on-the-vulnerable-target-then-submit-the-contents-of-the-flagtxt-file-that-can-be-found-in-c)
+- [NIX Shells](#nix-shells)
+    - [Infiltrating Unix/Linux](#infiltrating-unixlinux) 
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - []()
+      - 
+
+Web Shells
+Skills Assessment
+Additional Considerations
 
 # Shell Basics
 
