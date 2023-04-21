@@ -59,7 +59,7 @@
     - [Q: Gain a shell on the vulnerable target, then submit the contents of the flag.txt file that can be found in C:\](#q-gain-a-shell-on-the-vulnerable-target-then-submit-the-contents-of-the-flagtxt-file-that-can-be-found-in-c)
 - [NIX Shells](#nix-shells)
     - [Infiltrating Unix/Linux](#infiltrating-unixlinux) 
-      - []()
+    - [Spawning Interactive Shells]()
       - []()
       - []()
       - []()
@@ -952,3 +952,17 @@ Then just move to the C:\ and cat the flag.txt file!
 ## Infiltrating Unix/Linux
 
 Linux is used everywhere, that is why it is important to know how to hack it :)
+
+## Spawning Interactive Shells
+
+# Web Shells
+## Introduction to Web Shells
+## Laudanum, One Webshell To Rule Them All
+## Antak Webshell
+## PHP Web Shells
+
+# Skills Assessment
+## The Live Engagement
+
+# Additional Considerations
+## Detection & Prevention
