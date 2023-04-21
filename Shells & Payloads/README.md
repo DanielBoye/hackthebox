@@ -723,7 +723,9 @@ PING 192.168.86.39 (192.168.86.39): 56 data bytes
 
 Here we can see that the TTL is `ttl=128`, so our target is most likely to be a Windows host.
 
-#### OS Detection Scan
+
+#### OS Detection Scan
+
 
 ```shell-session
 DanielBoye@htb[/htb]$ sudo nmap -v -O 192.168.86.39
