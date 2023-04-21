@@ -59,16 +59,16 @@
     - [Q: Gain a shell on the vulnerable target, then submit the contents of the flag.txt file that can be found in C:\](#q-gain-a-shell-on-the-vulnerable-target-then-submit-the-contents-of-the-flagtxt-file-that-can-be-found-in-c)
 - [NIX Shells](#nix-shells)
     - [Infiltrating Unix/Linux](#infiltrating-unixlinux) 
-    - [Spawning Interactive Shells]()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - []()
-      - 
+    - [Spawning Interactive Shells](#spawning-interactive-shells)
+- [Web Shells](#web-shells)
+    - [Introduction to Web Shells](#introduction-to-web-shells)
+    - [Laudanum, One Webshell To Rule Them All](#laudanum-one-webshell-to-rule-them-all)
+    - [Antak Webshell](#antak-webshell)
+    - [PHP Web Shells](#php-web-shells)
+- [Skills Assessment](#skills-assessment)
+    - [The Live Engagement](#the-live-engagement)
+- [Additional Considerations](#additional-considerations)
+    - [Detection & Prevention](#detection--prevention)
 
 Web Shells
 Skills Assessment
