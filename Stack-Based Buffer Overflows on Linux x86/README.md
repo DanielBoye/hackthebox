@@ -44,70 +44,42 @@ If data is written to the reserved memory **buffer** or **stack** that is not **
 
 Exploit development is used in the phase of **Exploitation Phase**. This is after the version has been deemed exploitable. 
 
-
-
 Developing our own exploits
 
 - Very complex
-
 - Requires a deep understand of CPU operations
-
 - Software's functions that serve as our target
-
-
 
 To write exploits we use Python. 
 
-
-
 Code or programs that are exploits are a **proof-of-concept (POC)**
-
-
 
 Types of exploits
 
 - 0-day 
   
   - Newly identified vulnerability
-  
   - Not public
-  
   - Developer can not know this
-  
   - Will persist with new updates
 
 - N-day
   
   - Local
-    
     - Executed when opening a file
-      
       - PDF
-      
       - Macro (.docx)
-  
   - Remote
-    
     - Get payload running on system
-    
     - Executed over network
-  
   - DoS
-    
     - Prevent system from functioning
-      
       - Crash
-        
         - Individual software
-        
         - Entire system
-  
   - WebApp
-    
     - Allow command injection on
-      
       - Application
-      
       - Underlying database
 
 ## CPU Architecture
