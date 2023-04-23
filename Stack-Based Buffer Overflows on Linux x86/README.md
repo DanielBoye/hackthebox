@@ -49,9 +49,7 @@ Exploit development is used in the phase of **Exploitation Phase**. This is afte
 Developing our own exploits
 
 - Very complex
-
 - Requires a deep understand of CPU operations
-
 - Software's functions that serve as our target
 
 
@@ -67,85 +65,49 @@ Code or programs that are exploits are a **proof-of-concept (POC)**
 Types of exploits
 
 - 0-day 
-  
   - Newly identified vulnerability
-  
   - Not public
-  
   - Developer can not know this
-  
   - Will persist with new updates
-
 - N-day
-  
   - Local
-    
     - Executed when opening a file
-      
       - PDF
-      
       - Macro (.docx)
-  
   - Remote
-    
     - Get payload running on system
-    
     - Executed over network
-  
   - DoS
-  
   - WebApp
 
 ## CPU Architecture
 
 CPU use the Von-Neumann architecture
 
-
-
 Four functional units
 
 1. Memory
-
 2. Control Unit
-
 3. Arithmetical Logical Unit
-
 4. Input/Output Unit
 
-
-
 The most important one is the Arithmetical Logical Unit (ALU) and the Control Unit (CU), are combined to the Central Processing Unit (CPU)!
-
-
 
 ALU + CU = CPU
 
 They are responsiple for executing
-
 - Instructions
-
 - Flow control
-
-
 
 Commands and data are **fetched** from memory
 
-
-
 Bus system
-
 - Connection between
-  
   - Processor
-  
   - Memory
-  
   - Input/output unit
 
-
-
 **All data are transeffered via the bus system**
-
 
 
 Von-Neumann Architecture
@@ -153,40 +115,22 @@ Von-Neumann Architecture
 ![image](https://academy.hackthebox.com/storage/modules/31/von_neumann3.png)
 
 
-
 ### Memory
-
 - Primary Memory
-  
   - Cache
-    
     - Buffer
-    
     - Always fed with data and code
-  
   - Random Access Memory (RAM)
-    
     - Describes memory type
-    
     - Memory adresses
-
 - Secondary Memory
-  
   - External storage
-    
-    - HHD/SSD
-    
+    - HDD/SSD
     - Flash Drives
-    
     - CD/DVD-ROMs
-    
     - **Not** directly accessed by the CPU
-      
       - Uses the I/O interface
-  
   - Higher stirage capacity
-
-
 
 Control Unit
 
@@ -233,9 +177,7 @@ RISC are in most phones
 
 
 **Fixed length** 
-
 - 32-bit
-
 - 64-bit
 
 
