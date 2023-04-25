@@ -360,7 +360,7 @@ Check out bowfunc
 
 Screenshot:
 
-![](C:\Users\danie\AppData\Roaming\marktext\images\2023-04-25-20-33-47-image.png)
+![image](https://user-images.githubusercontent.com/83395536/234377488-4e7470d8-3ec2-4d80-b53b-57fce8360f9b.png)
 
 Then it is just to read out the hexidecimal from the memory adress! 
 
