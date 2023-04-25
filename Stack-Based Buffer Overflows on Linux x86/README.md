@@ -360,15 +360,13 @@ Check out bowfunc
 
 Screenshot:
 
-![image](https://user-images.githubusercontent.com/83395536/234377488-4e7470d8-3ec2-4d80-b53b-57fce8360f9b.png)
+![](C:\Users\danie\AppData\Roaming\marktext\images\2023-04-25-20-33-47-image.png)
 
 Then it is just to read out the hexidecimal from the memory adress! 
 
 ## CPU Registers
 
 Registers offer a small amount of storage space where data can be stored temporarily.
-
-
 
 Types of registers
 
@@ -403,15 +401,11 @@ Types of registers
 
 ### Stack Frames
 
-
-
 - The stack starts with a high address and grows down to low memory addresses.
 - The **Base Pointer** points to the beginning (base) of the stack and the Stack Pointer points to the top of the stack.
 - The stack is divided into regions called **Stack Frames** that allocate memory for functions as they are called.
 - A **stack frame** defines a frame of data with the **beginning (EBP)** and the **end (ESP)**. 
 - The stack memory is built on a Last-In-First-Out (LIFO) data structure.
-
-
 
 ### Prologue
 
@@ -419,18 +413,16 @@ Types of registers
 (gdb) disas bowfunc 
 
 Dump of assembler code for function bowfunc:
-   0x0000054d <+0>:	    push   ebp       # <---- 1. Stores previous EBP
-   0x0000054e <+1>:	    mov    ebp,esp   # <---- 2. Creates new Stack Frame
-   0x00000550 <+3>:	    push   ebx
-   0x00000551 <+4>:	    sub    esp,0x404 # <---- 3. Moves ESP to the top
+   0x0000054d <+0>:        push   ebp       # <---- 1. Stores previous EBP
+   0x0000054e <+1>:        mov    ebp,esp   # <---- 2. Creates new Stack Frame
+   0x00000550 <+3>:        push   ebx
+   0x00000551 <+4>:        sub    esp,0x404 # <---- 3. Moves ESP to the top
    <...SNIP...>
-   0x00000580 <+51>:	leave  
-   0x00000581 <+52>:	ret    :	ret    
+   0x00000580 <+51>:    leave  
+   0x00000581 <+52>:    ret    :    ret    
 ```
 
 This is called the Prologue. Moving the ESP on the top for operations.
-
-
 
 ### Epilogue
 
@@ -438,18 +430,16 @@ This is called the Prologue. Moving the ESP on the top for operations.
 (gdb) disas bowfunc 
 
 Dump of assembler code for function bowfunc:
-   0x0000054d <+0>:	    push   ebp       
-   0x0000054e <+1>:	    mov    ebp,esp   
-   0x00000550 <+3>:	    push   ebx
-   0x00000551 <+4>:	    sub    esp,0x404 
+   0x0000054d <+0>:        push   ebp       
+   0x0000054e <+1>:        mov    ebp,esp   
+   0x00000550 <+3>:        push   ebx
+   0x00000551 <+4>:        sub    esp,0x404 
    <...SNIP...>
-   0x00000580 <+51>:	leave  # <----------------------
-   0x00000581 <+52>:	ret    # <--- Leave stack frame
+   0x00000580 <+51>:    leave  # <----------------------
+   0x00000581 <+52>:    ret    # <--- Leave stack frame
 ```
 
 In the epilogue, the **current EBP replaces ESP**, and it goes back to its original value from the start of the function. The epilogue is short and can be done in different ways, but our example does it with only two instructions.
-
-
 
 #### Index registers
 
@@ -457,8 +447,6 @@ In the epilogue, the **current EBP replaces ESP**, and it goes back to its origi
 | ------------------- | ------------------- | ----------------------------------------------------------------------- |
 | `ESI`               | `RSI`               | Source Index is used as a pointer from a source for string operations   |
 | `EDI`               | `RDI`               | Destination is used as a pointer to a destination for string operations |
-
-
 
 ### Endianness
 
@@ -478,19 +466,49 @@ Now, let us look at an example with the following values:
 
 This is very important for us to enter our code in the right order later when we have to tell the CPU to which address it should point.
 
-
-
-
-
-
-
-
-
-
-
 # Exploit
 
 ## Take Control of EIP
+
+We need to get the **instruction pointer (EIP)** under control, so we can tell it to which adress it should jump to!
+
+
+
+This will make it point to the adress where our shellcode starts and the CPU executes it.
+
+
+
+#### Seqmentation Fault
+
+```shell
+student@nix-bow:~$ gdb -q bow32
+
+(gdb) run $(python -c "print '\x55' * 1200")
+Starting program: /home/student/bow/bow32 $(python -c "print '\x55' * 1200")
+
+Program received signal SIGSEGV, Segmentation fault.
+0x55555555 in ?? ()
+```
+
+
+
+Here we insert 1200 "U"s with running python code into our program. And we have indeed overwritten the EIP. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Determine the Length for Shellcode
 
