@@ -253,8 +253,6 @@ Dissasemble main
 ```shellcode
 gdb -q *filename
 
-
-
 (gdb) disassemble main
 ```
 
@@ -366,9 +364,129 @@ Screenshot:
 
 Then it is just to read out the hexidecimal from the memory adress! 
 
-
-
 ## CPU Registers
+
+Registers offer a small amount of storage space where data can be stored temporarily.
+
+
+
+Types of registers
+
+- General registers
+  
+  - Data registers
+  
+  - Pointer registers
+  
+  - Index registers
+
+- Control registers
+
+- Segment registers
+
+#### Data registers
+
+| **32-bit Register** | **64-bit Register** | **Description**                                                                                             |
+| ------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `EAX`               | `RAX`               | Accumulator is used in input/output and for arithmetic operations                                           |
+| `EBX`               | `RBX`               | Base is used in indexed addressing                                                                          |
+| `ECX`               | `RCX`               | Counter is used to rotate instructions and count loops                                                      |
+| `EDX`               | `RDX`               | Data is used for I/O and in arithmetic operations for multiply and divide operations involving large values |
+
+#### Pointer registers
+
+| **32-bit Register** | **64-bit Register** | **Description**                                                                                             |
+| ------------------- | ------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `EIP`               | `RIP`               | Instruction Pointer stores the offset address of the next instruction to be executed                        |
+| `ESP`               | `RSP`               | Stack Pointer points to the top of the stack                                                                |
+| `EBP`               | `RBP`               | Base Pointer is also known as `Stack Base Pointer` or `Frame Pointer` thats points to the base of the stack |
+
+### Stack Frames
+
+
+
+- The stack starts with a high address and grows down to low memory addresses.
+- The **Base Pointer** points to the beginning (base) of the stack and the Stack Pointer points to the top of the stack.
+- The stack is divided into regions called **Stack Frames** that allocate memory for functions as they are called.
+- A **stack frame** defines a frame of data with the **beginning (EBP)** and the **end (ESP)**. 
+- The stack memory is built on a Last-In-First-Out (LIFO) data structure.
+
+
+
+### Prologue
+
+```shell
+(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d <+0>:	    push   ebp       # <---- 1. Stores previous EBP
+   0x0000054e <+1>:	    mov    ebp,esp   # <---- 2. Creates new Stack Frame
+   0x00000550 <+3>:	    push   ebx
+   0x00000551 <+4>:	    sub    esp,0x404 # <---- 3. Moves ESP to the top
+   <...SNIP...>
+   0x00000580 <+51>:	leave  
+   0x00000581 <+52>:	ret    :	ret    
+```
+
+This is called the Prologue. Moving the ESP on the top for operations.
+
+
+
+### Epilogue
+
+```shell
+(gdb) disas bowfunc 
+
+Dump of assembler code for function bowfunc:
+   0x0000054d <+0>:	    push   ebp       
+   0x0000054e <+1>:	    mov    ebp,esp   
+   0x00000550 <+3>:	    push   ebx
+   0x00000551 <+4>:	    sub    esp,0x404 
+   <...SNIP...>
+   0x00000580 <+51>:	leave  # <----------------------
+   0x00000581 <+52>:	ret    # <--- Leave stack frame
+```
+
+In the epilogue, the **current EBP replaces ESP**, and it goes back to its original value from the start of the function. The epilogue is short and can be done in different ways, but our example does it with only two instructions.
+
+
+
+#### Index registers
+
+| **Register 32-bit** | **Register 64-bit** | **Description**                                                         |
+| ------------------- | ------------------- | ----------------------------------------------------------------------- |
+| `ESI`               | `RSI`               | Source Index is used as a pointer from a source for string operations   |
+| `EDI`               | `RDI`               | Destination is used as a pointer to a destination for string operations |
+
+
+
+### Endianness
+
+During load and save operations in registers and memories, the bytes are read in a different order. This byte order is called `endianness`. Endianness is distinguished between the `little-endian` format and the `big-endian` format.
+
+`Big-endian` and `litt~~le-endian` are about the order of valence. I~~n `big-endian`, the digits with the highest valence are initially. In `little-endian`, the digits with the lowest valence are at the beginning. Mainframe processors use the `big-endian` format, some RISC architectures, minicomputers, and in TCP/IP networks, the byte order is also in `big-endian` format.
+
+Now, let us look at an example with the following values:
+
+- Address: `0xffff0000`
+- Word: `\xAA\xBB\xCC\xDD`
+
+| **Memory Address** | **0xffff0000** | **0xffff0001** | **0xffff0002** | **0xffff0003** |
+| ------------------ | -------------- | -------------- | -------------- | -------------- |
+| Big-Endian         | AA             | BB             | CC             | DD             |
+| Little-Endian      | DD             | CC             | BB             | AA             |
+
+This is very important for us to enter our code in the right order later when we have to tell the CPU to which address it should point.
+
+
+
+
+
+
+
+
+
+
 
 # Exploit
 
@@ -391,5 +509,3 @@ Then it is just to read out the hexidecimal from the memory adress!
 # Skills Assessment
 
 ## Skills Assessment - Buffer Overflow
-
-
