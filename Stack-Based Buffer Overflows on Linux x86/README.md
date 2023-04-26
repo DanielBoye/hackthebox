@@ -123,7 +123,7 @@ Von-Neumann Architecture
     - CD/DVD-ROMs
     - **Not** directly accessed by the CPU
       - Uses the I/O interface
-  - Higher stirage capacity
+  - Higher storage capacity
 
 Control Unit
 
@@ -185,11 +185,8 @@ Taken from the Academy:
 Binary files
 
 - Protable Executable Format (**PE**)
-  
   - Used on Microsoft
-
 - Executable and Linking Format (**ELF**)
-  
   - Used on UNIX
 
 ### The Memory
@@ -197,27 +194,20 @@ Binary files
 ![image](https://academy.hackthebox.com/storage/modules/31/buffer_overflow_1.png)
 
 .text
-
 - assembler instructions
 
 .data
-
 - **global** and **static** variables
 
 .bss
-
 - allocated variables represented exclusively by 0 bits
 
 Heap
-
 - starts at the end of .bss and grows on the higher memory adresses
 
 The Stack
-
 - Last-In-First-Out
-
 - Defined in **RAM**
-
 - Accessed via a **stack pointer**
 
 ### Disable ASLR
