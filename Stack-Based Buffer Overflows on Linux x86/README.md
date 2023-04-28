@@ -802,11 +802,13 @@ this could be objdump or just normal file check
 
 3. running gdb -q
 4. Disassemble main
-5. Checking the adress
-6. Checking bad characters
-7. Making exploit without the bad characters
-8. Running maybe a clean version of the exploit to find the return adress
-9. Using everything together with python
+5. Adding breakpoints
+7. Checking the return adress for the end of the exploit
+8. Checking bad characters
+9. Making exploit without the bad characters
+10. Running maybe a clean version of the exploit to find the return adress
+11. Using everything together with python
 
 need also a sheet for subtracting the numbers
 
+the order needs to be checked
