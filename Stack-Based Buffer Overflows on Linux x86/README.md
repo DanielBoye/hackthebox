@@ -782,13 +782,13 @@ gdb -q leave_msg
 
 ## Check filetype
 
-Objdump
+### Objdump
 
 ```shell
 objdump -f leave_msg 
 ```
 
-File
+### File
 
 ```shell
 file leave_msg
