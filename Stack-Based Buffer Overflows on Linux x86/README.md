@@ -52,6 +52,36 @@
 - [Skills Assessment](#skills-assessment)
   - [Skills Assessment - Buffer Overflow](#skills-assessment---buffer-overflow)
 - [Cheat Sheet](#cheat-sheet)
+  - [Check filetype](#check-filetype)
+    - [objdump](#objdump) 
+    - [File](#file)
+  - [Open the file](#open-the-file)
+  - [Set syntax to Intel](#set-syntax-to-intel)
+  - [Disassemble file](#dissasemble-file)
+  - [Determine offset with MSFvenom](#determine-offset-with-msfvenom)
+  - [Run file](#run-file)
+  - [Check EIP memory adress](#check-eip-memory-adress)
+  - [Find gdb offset with MSFvenom](#find-gdb-offset-with-msfvenom)
+  - [Determine that you have found the offset](#determine-that-you-have-found-the-offset)
+  - [Determine length of shellcode](#determine-length-of-shellcode)
+    - [Shellcode calculation with NOPs](#shellcode-calculation-with-nops)
+    - [In gdb](#in-gdb)
+  - [Check bad characters](#check-bad-characters)
+    - [Characters](#characters)
+    - [Notes](#notes)
+    - [Find where we need to break a function](#find-where-we-need-to-break-a-function) 
+    - [Make breakpoint](#make-breakpoint)
+  - [Send CHARS](#send-chars)
+    - [Checking stack](#checking-stack)
+  - [Make shellcode](#make-shellcode)
+    - [Shellcode](#shellcode-1)
+    - [Notes](#notes-1)
+  - [Run shellcode](#run-shellcode) 
+    - [Check stack](#check-stack) 
+  - [Find return adress](#find-return-adress)
+    - [Convert to little endian](#find-return-adress) 
+    - [Edit return adress](#edit-return-adress)
+  - [Final exploit](#final-exploit)
 
 # Introduction
 
@@ -782,13 +812,13 @@ gdb -q leave_msg
 
 ## Check filetype
 
-### Objdump
+Objdump
 
 ```shell
 objdump -f leave_msg 
 ```
 
-### File
+File
 
 ```shell
 file leave_msg
@@ -1102,15 +1132,3 @@ new:
 ```
 
 this is ran outside gdb
-
-
-
-We run the program outside `gdb`
-
-Running maybe a clean version of the exploit to find the return adress
-
-3. Using everything together with python
-
-need also a sheet for subtracting the numbers
-
-the order needs to be checked
