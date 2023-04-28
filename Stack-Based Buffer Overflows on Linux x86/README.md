@@ -51,6 +51,7 @@
   - [Prevention Techniques and Mechanisms](#prevention-techniques-and-mechanisms)
 - [Skills Assessment](#skills-assessment)
   - [Skills Assessment - Buffer Overflow](#skills-assessment---buffer-overflow)
+- [Cheat Sheet](#cheat-sheet)
 
 # Introduction
 
