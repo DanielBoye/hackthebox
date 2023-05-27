@@ -7,3 +7,7 @@ Check out [Shells & Payloads](Shells%20&%20Payloads) or [Stack-Based Buffer Over
 ## Currently working on 
 
 - [Introduction to Bash Scripting](Introduction%20to%20Bash%20Scripting)
+
+## Completed log
+
+coming soon...
