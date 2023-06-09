@@ -6,10 +6,11 @@ Check out [Shells & Payloads](Shells%20&%20Payloads) or [Stack-Based Buffer Over
 
 ## Currently working on 
 
-- [Introduction to Bash Scripting](Introduction%20to%20Bash%20Scripting)
+
 
 ## Completed log
 
+-  [Introduction to Bash Scripting](https://academy.hackthebox.com/achievement/176451/21)
 -  [Introduction to Academy](https://academy.hackthebox.com/achievement/176451/15)
 -  [Web Requests](https://academy.hackthebox.com/achievement/176451/35)
 -  [JavaScript Deobfuscation](https://academy.hackthebox.com/achievement/176451/41)
