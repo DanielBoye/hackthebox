@@ -6,7 +6,7 @@ Check out [Shells & Payloads](Shells%20&%20Payloads) or [Stack-Based Buffer Over
 
 ## Currently working on 
 
-
+[Linux Privilege Escalation](https://github.com/DanielBoye/hackthebox/tree/main/Linux%20Privilege%20Escalation)
 
 ## Completed log
 
