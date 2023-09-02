@@ -20,6 +20,7 @@ We are provided with two Solidity contracts, `Setup.sol` and `Creature.sol`. The
 ## Solution
 
 1. Find vulnerable function
+
 When looking through the `loot()` function, we can see something fishy. 
 ```solidity
 function loot() external {
@@ -33,7 +34,9 @@ But when lifePoints are 0, it will transfer the entire balance of the current co
 
 AKA, transfer us all of the money 😎
 
-2. Now we need to find a way for us to make our `lifePoints` to 0. This can be done with either the `punch()` function
+2. Now we need to find a way for us to make our `lifePoints` to 0.
+
+This can be done with either the `punch()` function
 ```solidity
 function punch() external {
         _dealDamage(1);
@@ -54,12 +57,14 @@ function _dealDamage(uint256 _damage) internal {
 ```
 
 2. Check Initial Life Points
+
 I will use the cast call command to check the initial life points of my wallet. We should have 20.
 ```bash
 cast call *targetadress* "lifePoints()" --rpc-url https://x.x.x.x/rpc
 ```
 
 3. Attack!!
+
 Then to leak the flag we will make a loop that will run 20 times with using the `strongAttack` function where we set the `_damage` to 1, until we have a lifepoint of 0.  
 ```bash
 for ((i=0; i<20; i++)); do
@@ -68,6 +73,7 @@ done
 ```
 
 4. Loot the Creature
+
 Once the creature's life points reach 0, we can use the loot function to obtain its balance.
 
 ```bash
